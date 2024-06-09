@@ -1,0 +1,2 @@
+type:module in packge.json to use import statement
+getDirname: imports may __dirname kam ni kr rha tha express.static k leye chye tha tu ye function bnya jo windows or baki os k according dirname dey ga
