@@ -9,7 +9,7 @@ const connectDB = async () => {
       // useNewURLParser: true,
       useUnifiedTopology: true,
       //useFindAndModify:false, // ye feild debracated chezon k  leye hoti hai but mujhy yhan error arha tha tbhi comment kr dey
-      dbName: "Chat_App",
+      dbName: "Foodie",
     };
 
     await mongoose.connect(DATABASE_URL, options);
