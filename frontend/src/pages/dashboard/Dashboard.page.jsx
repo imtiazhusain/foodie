@@ -23,7 +23,7 @@ const Dashboard = () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
         <Header />
         <Menu category={category} setCategory={setCategory} />
-        <FoodItems />
+        <FoodItems category={category} />
       </div>
       <Footer />
     </div>

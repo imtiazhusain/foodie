@@ -1,7 +1,15 @@
-import React from "react";
+import { assets } from "@/assets/assets";
+import { Minus, Plus } from "lucide-react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, removeFromCart } from "@/slices/cartSlice";
 
 const FoodItem = ({ addToCartClicked, handleAddToCardClicked, food }) => {
   console.log(food);
+  const [itemCount, setItemCount] = useState(0);
+  const cartItems = useSelector((state) => state.cart);
+  console.log(cartItems);
+  const dispatch = useDispatch();
   return (
     <div
       className="rounded-md h-[330px] bg-white max-w-[250px] shadow-md transition-all duration-300 animate-fadeIn  "
@@ -9,39 +17,31 @@ const FoodItem = ({ addToCartClicked, handleAddToCardClicked, food }) => {
     >
       <div className="relative">
         <img src={food.image} alt={food.name} className="w-full rounded-t-md" />
-        {addToCartClicked ? (
-          <div
-            className="absolute bottom-3 right-4 h-7 w-18 rounded-full bg-white grid place-content-center font-medium p-1"
-            onClick={handleAddToCardClicked}
-            onMouseLeave={handleAddToCardClicked}
-          >
-            <div className="flex gap-1 justify-evenly">
+        {cartItems[food._id] ? (
+          <div className="absolute bottom-3 right-4 h-7 w-18 rounded-full bg-white grid place-content-center font-medium p-1">
+            <div className="flex gap-2 justify-evenly">
               <button
                 className=" h-6 w-6 rounded-full bg-red-50 text-red-700 grid place-content-center font-medium     items-center r  px-2 py-1 text-xs   ring-1 ring-inset ring-red-600/10"
-                onClick={handleAddToCardClicked}
+                onClick={() => dispatch(removeFromCart(food._id))}
               >
-                -
+                <Minus size={15} />
               </button>
-              <div
-                className="  h-6 w-6  bg-white grid place-content-center font-medium text-xs"
-                onClick={handleAddToCardClicked}
-              >
-                1
-              </div>
+
+              <p>{cartItems[food._id]}</p>
               <button
                 className=" h-6 w-6 rounded-full bg-green-100 text-green-300 grid place-content-center font-medium items-center r  px-2 py-1 text-xs   ring-1 ring-inset ring-green-600/20"
-                onClick={handleAddToCardClicked}
+                onClick={() => dispatch(addToCart(food._id))}
               >
-                +
+                <Plus size={15} />
               </button>
             </div>
           </div>
         ) : (
           <button
             className="absolute bottom-3 right-4 h-6 w-6 rounded-full bg-white grid place-content-center font-medium"
-            onClick={handleAddToCardClicked}
+            onClick={() => dispatch(addToCart(food._id))}
           >
-            +
+            <Plus size={15} />
           </button>
         )}
       </div>
