@@ -7,7 +7,7 @@ import { addToCart, removeFromCart } from "@/slices/cartSlice";
 const FoodItem = ({ addToCartClicked, handleAddToCardClicked, food }) => {
   console.log(food);
   const [itemCount, setItemCount] = useState(0);
-  const cartItems = useSelector((state) => state.cart);
+  const cartItems = useSelector((state) => state.cart.items);
   console.log(cartItems);
   const dispatch = useDispatch();
   return (
