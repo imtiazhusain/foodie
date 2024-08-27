@@ -31,8 +31,8 @@ const Navbar = () => {
     <Disclosure as="nav" className="bg-gray-800 sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
-          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-            {/* Mobile menu button*/}
+          {/* Mobile menu button*/}
+          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden ">
             <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
               <span className="absolute -inset-0.5" />
               <span className="sr-only">Open main menu</span>
@@ -46,8 +46,9 @@ const Navbar = () => {
               />
             </DisclosureButton>
           </div>
+
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <Link to="/dashboard">
+            <Link to="/dashboard" className=" hidden sm:block">
               <div className="flex flex-shrink-0 items-center">
                 <img alt="Logo" src={assets.logo} className="h-8 w-auto" />
               </div>
@@ -72,6 +73,7 @@ const Navbar = () => {
               </div>
             </div>
           </div>
+
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 ">
             <Link to="/cart">
               <button
@@ -81,7 +83,7 @@ const Navbar = () => {
                 <span className="absolute -inset-1.5" />
                 <div className="flex items-center justify-center">
                   <ShoppingCartIcon aria-hidden="true" className="h-6 w-6" />
-                  <span className="inline mb-7 -ml-3 items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                  <span className="inline mb-5 -ml-3 items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
                     {TotalCartItems}
                   </span>
                 </div>
