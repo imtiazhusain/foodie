@@ -34,7 +34,7 @@ app.use(cors());
 const __dirname = getDirname(import.meta.url, path);
 console.log(__dirname);
 // console.log(express.static(__dirname));
-app.use("/public", express.static(__dirname + "/public"));
+app.use("/images", express.static(__dirname + "/public"));
 app.use("/api/user", userRoutes);
 app.use(errorHandler);
 app.use((req, res) => {

@@ -8,15 +8,27 @@ class JoiValidation {
     return schema.validate(body);
   }
 
-  static createMovieRatingValidation(body) {
+  static createFodItemValidation(body) {
     const schema = Joi.object({
-      name: Joi.string().required().label("Movie Name"),
-      rating: Joi.number().required().label("Movie Rating"),
-      description: Joi.string().required().label("Movie Description"),
-      poster: Joi.string().required().label("Movie Poster"),
+      name: Joi.string().required().label("Item Name"),
+      category: Joi.string().required().label("Item category"),
+      description: Joi.string().required().label("Item Description"),
+      price: Joi.number().required().label("Item Price"),
+      image: Joi.string().required().label("Item Image"),
     });
     return schema.validate(body);
   }
+
+  static editFoodItemValidation = () => {
+    const schema = Joi.object({
+      name: Joi.string().required().label("Item Name"),
+      category: Joi.string().required().label("Item category"),
+      description: Joi.string().required().label("Item Description"),
+      price: Joi.number().required().label("Item Price"),
+    });
+
+    return schema.validate(schema);
+  };
 
   static updateMovieRatingValidation(body) {
     const schema = Joi.object({

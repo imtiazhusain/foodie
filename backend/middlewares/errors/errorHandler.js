@@ -8,7 +8,7 @@ const errorHandler = (error, req, res, next) => {
   let statusCode = 500;
   let data = {
     status: "error",
-    message: "internal server error",
+    message: "Internal server error",
     // user ko orignal message ni show krna hota is leye jb ye produciton may jaye
     // tu .env file May DEBUG_MODE ko false kr dena tu orignal message ni jaye ga
     // but abhi hm development kr rhy so abhi tu chye tu abhi DEBUG_MODE true kiya hva
