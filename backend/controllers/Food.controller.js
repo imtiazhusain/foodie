@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import foodItemModel from "../models/FoodItem.model";
-import JoiValidation from "../utils/joiValidation";
-import CustomErrorHandler from "../middlewares/errors/customErrorHandler";
-import HelperMethods from "../utils/helper";
+import foodItemModel from "../models/FoodItem.model.js";
+import JoiValidation from "../utils/joiValidation.js";
+import CustomErrorHandler from "../middlewares/errors/customErrorHandler.js";
+import HelperMethods from "../utils/helper.js";
 
 class FoodController {
   static storeNewFoodItem = async (req, res, next) => {
@@ -40,6 +40,16 @@ class FoodController {
   static listAllFoodItems = async (req, res, next) => {
     try {
       const allFoodItems = await foodItemModel.find({});
+
+      allFoodItems.forEach((item) => {
+        // Check if item and image exist and if image does not start with 'http'
+        if (item && item.image && !item.image.startsWith("http")) {
+          // Update profile_pic by prefixing it with the SERVER_URL and the path to uploads
+          item.image = `${process.env.SERVER_URL || ""}/images/uploads/${
+            item.image
+          }`;
+        }
+      });
       return res.status(200).json({
         status: true,
         data: allFoodItems,

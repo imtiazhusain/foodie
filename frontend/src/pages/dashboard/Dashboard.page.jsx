@@ -1,14 +1,6 @@
-import { assets, menu_list, food_list } from "@/assets/assets";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import { Button } from "@/components/ui/button";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+
 import React, { useState } from "react";
 import Menu from "./Menu";
 import FoodItems from "./FoodItems";

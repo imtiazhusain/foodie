@@ -1,15 +1,15 @@
 import Navbar from "@/components/Navbar";
-import React from "react";
+import React, { useState } from "react";
 import CartTable from "./Table";
 import getTotalCartAmount from "@/lib/getTotalCartAmount";
 import { useSelector } from "react-redux";
-import { food_list } from "@/assets/assets";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.items);
-
-  const total = getTotalCartAmount(food_list, cartItems);
+  const { data } = useSelector((state) => state.productsList);
+  const total = getTotalCartAmount(data, cartItems);
   console.log(total);
   return (
     <div className=" h-svh md:h-screen flex flex-col  ">
@@ -23,19 +23,23 @@ const Cart = () => {
             </h2>
             <div className="flex justify-between">
               <h3>SubTotals</h3>
-              <h3>${total}</h3>
+              <h3>{total > 0 ? "$ " + total : "0"}</h3>
             </div>
             <hr />
             <div className="flex justify-between">
               <h3>Delivery Fee</h3>
-              <h3>$1</h3>
+              <h3>{total > 0 ? "$1" : "0"}</h3>
             </div>
             <hr />
             <div className="flex justify-between mb-5">
               <h3 className="font-semibold text-slate-900">Total</h3>
-              <h3 className="font-semibold text-slate-900">${total + 1}</h3>
+              <h3 className="font-semibold text-slate-900">
+                {total > 0 ? "$ " + Number(total + 1) : "0"}
+              </h3>
             </div>
-            <Button className="mt-9">PROCEED TO CHECKOUT</Button>
+            <Button className="mt-9" disabled={total === 0 && true}>
+              <Link to="/place-order">PROCEED TO CHECKOUT</Link>
+            </Button>
           </div>
 
           <div className="mb-5">

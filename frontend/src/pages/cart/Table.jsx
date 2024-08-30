@@ -8,7 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { food_list } from "@/assets/assets";
 import { useDispatch, useSelector } from "react-redux";
 import { Delete, Minus, Plus, Trash2 } from "lucide-react";
 import {
@@ -19,6 +18,7 @@ import {
 
 const CartTable = () => {
   const { items: cartItems, totalItems } = useSelector((state) => state.cart);
+  const { data } = useSelector((state) => state.productsList);
   const dispatch = useDispatch();
   console.log(cartItems);
 
@@ -42,7 +42,7 @@ const CartTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {food_list.map((item) => {
+          {data.map((item) => {
             if (cartItems[item._id] > 0) {
               return (
                 <TableRow>

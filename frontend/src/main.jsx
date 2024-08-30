@@ -12,7 +12,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <Provider store={store}>
         <App />
-        <Toaster richColors position="top-right" />
+        <Toaster
+          richColors
+          position="top-right"
+          toastOptions={{ className: "h-12 p-2" }}
+        />
       </Provider>
     </BrowserRouter>
   </React.StrictMode>

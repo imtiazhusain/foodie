@@ -1,3 +1,6 @@
+import path from "path";
+import fs from "fs";
+
 class HelperMethods {
   static generateOTP() {
     let otp = "";
@@ -38,4 +41,4 @@ class HelperMethods {
   };
 }
 
-module.exports = HelperMethods;
+export default HelperMethods;
