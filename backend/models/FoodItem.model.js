@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const foodItemSchema = new mongoose.Schema({
-  name: { type: string, required: true, trim: true },
+  name: { type: String, required: true, trim: true },
   description: { type: String, required: true, trim: true },
   category: { type: String, required: true, trim: true },
   image: { type: String, required: true },

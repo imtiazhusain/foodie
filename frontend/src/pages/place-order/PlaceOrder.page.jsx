@@ -1,4 +1,3 @@
-import { food_list } from "@/assets/assets";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import getTotalCartAmount from "@/lib/getTotalCartAmount";
@@ -7,7 +6,8 @@ import { useSelector } from "react-redux";
 
 const PlaceOrder = () => {
   const cartItems = useSelector((state) => state.cart.items);
-  const total = getTotalCartAmount(food_list, cartItems);
+  const { data } = useSelector((state) => state.productsList);
+  const total = getTotalCartAmount(data, cartItems);
 
   return (
     <div className="h-svh md:h-screen flex flex-col  ">

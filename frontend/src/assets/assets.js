@@ -59,6 +59,8 @@ import profile_icon from "./profile_icon.png";
 import bag_icon from "./bag_icon.png";
 import logout_icon from "./logout_icon.png";
 import parcel_icon from "./parcel_icon.png";
+import output from "./output.png";
+import upload_area from "./upload_area.png";
 
 export const assets = {
   logo,
@@ -80,6 +82,7 @@ export const assets = {
   logout_icon,
   bag_icon,
   parcel_icon,
+  upload_area,
 };
 
 export const menu_list = [
@@ -106,14 +109,6 @@ export const menu_list = [
   {
     menu_name: "Pure Veg",
     menu_image: menu_6,
-  },
-  {
-    menu_name: "Pasta",
-    menu_image: menu_7,
-  },
-  {
-    menu_name: "Noodles",
-    menu_image: menu_8,
   },
   {
     menu_name: "Pasta",
@@ -308,7 +303,7 @@ export const food_list = [
   },
   {
     _id: "21",
-    name: "Garlic Mushroom ",
+    name: "Garlic Mushroom",
     image: food_21,
     price: 14,
     description:
