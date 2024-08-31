@@ -113,7 +113,7 @@ class CartController {
 
       return res
         .status(200)
-        .json({ status: "success", message: "Item Added to cart" });
+        .json({ status: "success", message: "Item deleted from cart" });
     } catch (error) {
       console.log(error);
       return next(error);
@@ -123,13 +123,18 @@ class CartController {
   static getCartData = async (req, res, next) => {
     try {
       const userData = await userModel.findById(req.user._id);
-      const cartData = userData.cart_data;
 
-      const totalCartItems = Object.keys(cartData).length;
+      // Initialize cart_data if it doesn't exist
+      if (!userData.cart_data) {
+        userData.cart_data = new Map();
+      }
+      console.log(userData.cart_data);
+      const totalCartItems = userData.cart_data.size;
 
-      return res
-        .status(200)
-        .json({ status: "success", data: { cartData, totalCartItems } });
+      return res.status(200).json({
+        status: "success",
+        data: { cartData: userData.cart_data, totalCartItems },
+      });
     } catch (error) {
       console.log(error);
       return next(error);

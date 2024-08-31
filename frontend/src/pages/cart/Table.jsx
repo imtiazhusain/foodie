@@ -90,7 +90,14 @@ const CartTable = () => {
                   <TableCell className="">
                     <Trash2
                       className="text-red-400 cursor-pointer"
-                      onClick={() => dispatch(deleteCartItemWithAPI(item?._id))}
+                      onClick={() =>
+                        dispatch(
+                          deleteCartItemWithAPI({
+                            itemId: item._id,
+                            quantity: cartItems[item._id],
+                          })
+                        )
+                      }
                     />
                   </TableCell>
                 </TableRow>

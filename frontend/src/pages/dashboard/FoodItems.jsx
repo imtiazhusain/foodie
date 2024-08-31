@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import FoodItem from "./FoodItem";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "@/slices/foodListSlice";
 import LoadingProducts from "./LoadingProducts";
-import { getCartDataFromApi } from "@/slices/cartSlice";
 
 // import fetchProducts from ''
 const FoodItems = ({ category }) => {
@@ -13,14 +11,6 @@ const FoodItems = ({ category }) => {
   );
 
   const [addToCartClicked, setAddToCartClicked] = useState(false);
-
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, []);
-  useEffect(() => {
-    console.log("get cart data.....");
-    dispatch(getCartDataFromApi());
-  }, []);
 
   const handleAddToCardClicked = () => {
     setAddToCartClicked((pre) => !pre);

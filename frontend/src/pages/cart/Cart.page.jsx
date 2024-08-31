@@ -1,8 +1,8 @@
 import Navbar from "@/components/Navbar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CartTable from "./Table";
 import getTotalCartAmount from "@/lib/getTotalCartAmount";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -10,7 +10,7 @@ const Cart = () => {
   const cartItems = useSelector((state) => state.cart.items);
   const { data } = useSelector((state) => state.productsList);
   const total = getTotalCartAmount(data, cartItems);
-  console.log(total);
+
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8  flex-grow grid place-content-center">
       <CartTable />
