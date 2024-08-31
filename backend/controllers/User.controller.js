@@ -60,10 +60,8 @@ class User {
         return next(error);
       }
 
-      const user = await userModel
-        .findOne({ email: req.body.email })
-        .select("- cart_data __v");
-      console.log(user);
+      const user = await userModel.findOne({ email: req.body.email });
+      console.log(user.cart_data);
       if (!user) {
         return next(CustomErrorHandler.wrongCredentials());
       }

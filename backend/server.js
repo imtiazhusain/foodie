@@ -8,6 +8,7 @@ import errorHandler from "./middlewares/errors/errorHandler.js";
 import cors from "cors";
 import userRoutes from "./routes/user.routes.js";
 import foodRoutes from "./routes/food.routes.js";
+import cartRoutes from "./routes/cart.routes.js";
 import path from "path";
 app.use(express.json());
 app.use(morgan("tiny"));
@@ -38,6 +39,7 @@ console.log(__dirname);
 app.use("/images", express.static(__dirname + "/public"));
 app.use("/api/user", userRoutes);
 app.use("/api/food", foodRoutes);
+app.use("/api/cart", cartRoutes);
 app.use(errorHandler);
 app.use((req, res) => {
   res.status(404).json({ status: "ERROR", message: "Page not Found" });

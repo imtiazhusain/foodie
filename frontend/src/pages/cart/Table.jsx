@@ -11,9 +11,9 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Delete, Minus, Plus, Trash2 } from "lucide-react";
 import {
-  addToCart,
-  deleteItemFromCart,
-  removeFromCart,
+  addToCartWithAPI,
+  deleteCartItemWithAPI,
+  removeCartItemWithAPI,
 } from "@/slices/cartSlice";
 
 const CartTable = () => {
@@ -61,7 +61,9 @@ const CartTable = () => {
                         <div className="flex gap-2 justify-evenly">
                           <button
                             className=" h-6 w-6 rounded-full bg-red-50 text-red-700 grid place-content-center font-medium     items-center r  px-2 py-1 text-xs   ring-1 ring-inset ring-red-600/10"
-                            onClick={() => dispatch(removeFromCart(item._id))}
+                            onClick={() =>
+                              dispatch(removeCartItemWithAPI(item._id))
+                            }
                           >
                             <Minus size={15} />
                           </button>
@@ -69,7 +71,7 @@ const CartTable = () => {
                           <p>{cartItems[item._id]}</p>
                           <button
                             className=" h-6 w-6 rounded-full bg-green-100 text-green-300 grid place-content-center font-medium items-center r  px-2 py-1 text-xs   ring-1 ring-inset ring-green-600/20"
-                            onClick={() => dispatch(addToCart(item._id))}
+                            onClick={() => dispatch(addToCartWithAPI(item._id))}
                           >
                             <Plus size={15} />
                           </button>
@@ -78,7 +80,7 @@ const CartTable = () => {
                     ) : (
                       <button
                         className=" h-6 w-6 rounded-full bg-white grid place-content-center font-medium"
-                        onClick={() => dispatch(addToCart(item._id))}
+                        onClick={() => dispatch(addToCartWithAPI(item._id))}
                       >
                         <Plus size={15} />
                       </button>
@@ -88,7 +90,7 @@ const CartTable = () => {
                   <TableCell className="">
                     <Trash2
                       className="text-red-400 cursor-pointer"
-                      onClick={() => dispatch(deleteItemFromCart(item?._id))}
+                      onClick={() => dispatch(deleteCartItemWithAPI(item?._id))}
                     />
                   </TableCell>
                 </TableRow>

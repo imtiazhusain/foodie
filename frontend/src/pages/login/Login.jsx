@@ -67,6 +67,7 @@ const Login = () => {
       localStorage.setItem("userInfo", JSON.stringify(response?.data?.data));
 
       dispatch(setUser(response?.data?.data));
+      console.log(response);
       navigate("/dashboard");
     } catch (error) {
       toast.error(

@@ -77,21 +77,24 @@ const Navbar = () => {
           </div>
 
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 ">
-            <div className="hidden sm:block">
-              {navigation.slice(1, 3).map((item) => (
-                <NavLink
-                  key={item.name}
-                  to={item.href}
-                  className={({ isActive }) =>
-                    isActive
-                      ? " bg-gray-900 text-white px-3 py-2 font-medium rounded-md mr-4" // Add 'active' when the link is active
-                      : " bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 font-medium rounded-md mr-4"
-                  }
-                >
-                  {item.name}
-                </NavLink>
-              ))}
-            </div>
+            {!user && (
+              <div className="hidden sm:block">
+                {navigation.slice(1, 3).map((item) => (
+                  <NavLink
+                    key={item.name}
+                    to={item.href}
+                    className={({ isActive }) =>
+                      isActive
+                        ? " bg-gray-900 text-white px-3 py-2 font-medium rounded-md mr-4" // Add 'active' when the link is active
+                        : " bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 font-medium rounded-md mr-4"
+                    }
+                  >
+                    {item.name}
+                  </NavLink>
+                ))}
+              </div>
+            )}
+
             <Link to="/cart">
               <button
                 type="button"
@@ -143,7 +146,7 @@ const Navbar = () => {
                   </MenuItem>
                   <MenuItem>
                     <button
-                      onClick={dispatch(logoutUser())}
+                      // onClick={dispatch(logoutUser())}
                       className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                     >
                       Sign out
@@ -158,7 +161,7 @@ const Navbar = () => {
 
       <DisclosurePanel className="sm:hidden">
         <div className="space-y-1 px-2 pb-3 pt-2">
-          {navigation.map((item) => (
+          {navigation.slice(0, 1).map((item) => (
             <DisclosureButton
               key={item.name}
               as={NavLink}
@@ -176,6 +179,26 @@ const Navbar = () => {
               {item.name}
             </DisclosureButton>
           ))}
+
+          {!user &&
+            navigation.slice(1, 3).map((item) => (
+              <DisclosureButton
+                key={item.name}
+                as={NavLink}
+                to={item.href}
+                className={({ isActive }) => {
+                  console.log(item.name, isActive); // Check if isActive toggles as expected
+                  return classNames(
+                    isActive
+                      ? "bg-gray-900 text-white"
+                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                    "block rounded-md px-3 py-2 text-base font-medium"
+                  );
+                }}
+              >
+                {item.name}
+              </DisclosureButton>
+            ))}
         </div>
       </DisclosurePanel>
     </Disclosure>

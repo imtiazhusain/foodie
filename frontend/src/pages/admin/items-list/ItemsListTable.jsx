@@ -10,11 +10,7 @@ import {
 } from "@/components/ui/table";
 import { useDispatch, useSelector } from "react-redux";
 import { Delete, Minus, Plus, SquarePen, Trash2 } from "lucide-react";
-import {
-  addToCart,
-  deleteItemFromCart,
-  removeFromCart,
-} from "@/slices/cartSlice";
+
 import ItemsListSkelton from "./ltemListSkelton";
 import { toast } from "sonner";
 import axios from "@/config/axios";

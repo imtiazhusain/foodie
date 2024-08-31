@@ -1,10 +1,11 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Menu from "./Menu";
 import FoodItems from "./FoodItems";
 import Header from "./Header";
+import { useDispatch } from "react-redux";
 
 const Dashboard = () => {
   const [category, setCategory] = useState("All");

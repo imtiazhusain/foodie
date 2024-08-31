@@ -1,26 +1,34 @@
 import mongoose from "mongoose";
-import CustomErrorHandler from "../middlewares/errors/customErrorHandler";
-import userModel from "../models/User.model";
+import CustomErrorHandler from "../middlewares/errors/customErrorHandler.js";
+import userModel from "../models/User.model.js";
 
 class CartController {
+  // this will increase cart item quantity by 1
   static addItemToCart = async (req, res, next) => {
     try {
-      const { item_id } = req.params;
-      const isValidID = mongoose.Types.ObjectId.isValid(item_id);
+      const { itemId } = req.body;
+      const isValidID = mongoose.Types.ObjectId.isValid(itemId);
       if (!isValidID) {
         return CustomErrorHandler.invalidId("Invalid cart item ID");
       }
       const userData = await userModel.findById(req.user._id);
-      const cartData = userData.cart_data;
       if (!userData) {
         return CustomErrorHandler.notFound("User not Found");
       }
-      if (!cartData[item_id]) {
-        cartData[item_id] = 1;
-      } else {
-        cartData[item_id] += 1;
+      // Initialize cart_data if it doesn't exist
+      if (!userData.cart_data) {
+        userData.cart_data = new Map();
       }
-      await userModel.findByIdAndUpdate(req.user._id, { cart_data: cartData });
+
+      if (!userData.cart_data.get(itemId)) {
+        userData.cart_data.set(itemId, 1);
+      } else {
+        userData.cart_data.set(itemId, userData.cart_data.get(itemId) + 1);
+      }
+
+      // Save the updated document
+      await userData.save();
+
       return res
         .status(200)
         .json({ status: "success", message: "Item Added to cart" });
@@ -30,26 +38,79 @@ class CartController {
     }
   };
 
+  //   this is reduce cart item quantity by 1
   static removeItemFromCart = async (req, res, next) => {
     try {
-      const { item_id } = req.params;
-      const isValidID = mongoose.Types.ObjectId.isValid(item_id);
+      const { itemId } = req.body;
+      const isValidID = mongoose.Types.ObjectId.isValid(itemId);
       if (!isValidID) {
         return CustomErrorHandler.invalidId("Invalid cart item ID");
       }
       const userData = await userModel.findById(req.user._id);
-      const cartData = userData.cart_data;
       if (!userData) {
         return CustomErrorHandler.notFound("User not Found");
       }
-      if (!cartData[item_id])
-        return CustomErrorHandler.notFound("Cart Item not found");
-      if (!cartData[item_id] > 0) {
-        cartData[item_id] -= 1;
-      } else {
-        delete cartData[item_id];
+
+      // Initialize cart_data if it doesn't exist
+      if (!userData.cart_data) {
+        userData.cart_data = new Map();
       }
-      await userModel.findByIdAndUpdate(req.user._id, { cart_data: cartData });
+
+      if (!userData.cart_data)
+        return CustomErrorHandler.notFound("Cart Item not found");
+
+      // Check if the item exists in the cart_data and if the value is greater than 0
+      if (
+        userData.cart_data.has(itemId) &&
+        userData.cart_data.get(itemId) > 0
+      ) {
+        // Decrease the quantity by 1
+        userData.cart_data.set(itemId, userData.cart_data.get(itemId) - 1);
+
+        // If the quantity becomes 0, delete the item from the cart
+        if (userData.cart_data.get(itemId) === 0) {
+          userData.cart_data.delete(itemId);
+        }
+      }
+
+      // Save the updated user document
+      await userData.save();
+
+      return res
+        .status(200)
+        .json({ status: "success", message: "Item Added to cart" });
+    } catch (error) {
+      console.log(error);
+      return next(error);
+    }
+  };
+
+  //   this will remove item form cart list
+  static deleteItemFromCart = async (req, res, next) => {
+    try {
+      const { itemId } = req.body;
+      const isValidID = mongoose.Types.ObjectId.isValid(itemId);
+      if (!isValidID) {
+        return CustomErrorHandler.invalidId("Invalid cart item ID");
+      }
+      const userData = await userModel.findById(req.user._id);
+      if (!userData) {
+        return CustomErrorHandler.notFound("User not Found");
+      }
+
+      // Initialize cart_data if it doesn't exist
+      if (!userData.cart_data) {
+        userData.cart_data = new Map();
+      }
+
+      if (!userData.cart_data)
+        return CustomErrorHandler.notFound("Cart Item not found");
+
+      userData.cart_data.delete(itemId);
+
+      // Save the updated user document
+      await userData.save();
+
       return res
         .status(200)
         .json({ status: "success", message: "Item Added to cart" });
@@ -64,7 +125,11 @@ class CartController {
       const userData = await userModel.findById(req.user._id);
       const cartData = userData.cart_data;
 
-      return res.status(200).json({ status: "success", data: cartData });
+      const totalCartItems = Object.keys(cartData).length;
+
+      return res
+        .status(200)
+        .json({ status: "success", data: { cartData, totalCartItems } });
     } catch (error) {
       console.log(error);
       return next(error);

@@ -3,7 +3,8 @@ import FoodItem from "./FoodItem";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "@/slices/foodListSlice";
 import LoadingProducts from "./LoadingProducts";
-import { Skeleton } from "@/components/ui/skeleton";
+import { getCartDataFromApi } from "@/slices/cartSlice";
+
 // import fetchProducts from ''
 const FoodItems = ({ category }) => {
   const dispatch = useDispatch();
@@ -11,11 +12,14 @@ const FoodItems = ({ category }) => {
     (state) => state.productsList
   );
 
-  console.log(data);
   const [addToCartClicked, setAddToCartClicked] = useState(false);
 
   useEffect(() => {
     dispatch(fetchProducts());
+  }, []);
+  useEffect(() => {
+    console.log("get cart data.....");
+    dispatch(getCartDataFromApi());
   }, []);
 
   const handleAddToCardClicked = () => {
@@ -32,6 +36,7 @@ const FoodItems = ({ category }) => {
             if (category === "All" || category === food.category)
               return (
                 <FoodItem
+                  key={food._id}
                   food={food}
                   addToCartClicked={addToCartClicked}
                   handleAddToCardClicked={handleAddToCardClicked}
