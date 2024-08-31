@@ -8,14 +8,9 @@ import generateJwtTokens from "../utils/generateJwtTokens.js";
 class User {
   static registerUser = async (req, res, next) => {
     try {
-      console.log("hello");
-      console.log(req.body);
-
-      // here i also coment 2 lines bcz i am not using multer here
       req.body.profile_pic = req?.file?.filename;
       const profile_pic = req.body.profile_pic;
 
-      console.log(req.body);
       const { name, email, password } = req.body;
       // validation
 
@@ -37,19 +32,12 @@ class User {
       // hashing password
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      console.log(hashedPassword);
-
-      // console.log(req.body)
-
       const registerUser = new userModel({
         name,
         email,
         profile_pic,
         password: hashedPassword,
       });
-
-      console.log("register user is");
-      console.log(registerUser);
 
       const result = await registerUser.save();
 
@@ -65,7 +53,6 @@ class User {
 
   static login = async (req, res, next) => {
     try {
-      console.log(req.body);
       // validation
       const { error } = joiValidation.logInBodyValidation(req.body);
 
@@ -75,7 +62,8 @@ class User {
 
       const user = await userModel
         .findOne({ email: req.body.email })
-        .select("-__v");
+        .select("- cart_data __v");
+      console.log(user);
       if (!user) {
         return next(CustomErrorHandler.wrongCredentials());
       }

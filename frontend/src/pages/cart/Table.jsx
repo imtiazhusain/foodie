@@ -42,7 +42,7 @@ const CartTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((item) => {
+          {data?.map((item) => {
             if (cartItems[item._id] > 0) {
               return (
                 <TableRow>

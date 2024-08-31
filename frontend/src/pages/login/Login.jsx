@@ -6,10 +6,13 @@ import Navbar from "../../components/Navbar";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { setUser } from "@/slices/authSlice";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const [inputs, setInputs] = useState({});
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const [isErrors, setIsErrors] = useState({ email: "", password: "" });
 
@@ -61,8 +64,9 @@ const Login = () => {
       const response = await axios.post("/user/login", inputs);
       // Handle the response data here
 
-      localStorage.setItem("userInfo", JSON.stringify(response.data.data));
+      localStorage.setItem("userInfo", JSON.stringify(response?.data?.data));
 
+      dispatch(setUser(response?.data?.data));
       navigate("/dashboard");
     } catch (error) {
       toast.error(
@@ -77,8 +81,8 @@ const Login = () => {
   };
 
   return (
-    <div className="h-svh md:h-screen flex flex-col  ">
-      <Navbar />
+    <>
+      {/* <Navbar /> */}
 
       <div className=" flex-grow grid place-content-center ">
         <div className="bg-white w-80 border border-gray-300  p-4 rounded-md ">
@@ -135,7 +139,7 @@ const Login = () => {
           </form>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
