@@ -9,4 +9,5 @@ export const {
   PASS,
   ACCESS_TOKEN_SECRET,
   SERVER_URL,
+  STRIPE_SECRET_KEY,
 } = process.env;

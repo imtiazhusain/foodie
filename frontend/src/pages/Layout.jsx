@@ -16,8 +16,12 @@ const Layout = () => {
   }, [user]);
   return (
     <div className="h-svh md:h-screen flex flex-col  ">
-      <Navbar />
-      <Outlet />
+      <div className="fixed top-0  z-[300] ">
+        <Navbar />
+      </div>
+      <div className="mt-[100px]">
+        <Outlet />
+      </div>
     </div>
   );
 };

@@ -13,6 +13,7 @@ import Orders from "./pages/admin/Orders.page";
 import AddItem from "./pages/admin/add-item/AddItem.page";
 import OrdersStatus from "./pages/placed-orders/PlacedOrders.page";
 import PlacedOrders from "./pages/placed-orders/PlacedOrders.page";
+import VerifyOrder from "./pages/verify-order/VerifyOrder.page";
 
 function App() {
   return (
@@ -27,8 +28,9 @@ function App() {
             <Route path="cart" element={<Cart />} />
             <Route path="place-order" element={<PlaceOrder />} />
             <Route path="dashboard" element={<Dashboard />} />
+            <Route path="verify-order" element={<VerifyOrder />} />
+            <Route path="placed-orders" element={<PlacedOrders />} />
           </Route>
-          <Route path="placed-orders" element={<PlacedOrders />} />
           <Route element={<AdminLayout />}>
             <Route path="items-list" element={<ListItems />} />
             <Route path="orders" element={<Orders />} />

@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "@/slices/authSlice";
 const navigation = [
   { name: "Home", href: "/dashboard", current: true },
+  { name: "Orders", href: "/placed-orders", current: true },
   { name: "Login", href: "/login", current: false },
   { name: "Signup", href: "/signup", current: false },
 ];
@@ -32,7 +33,7 @@ const Navbar = () => {
 
   console.log(navigation);
   return (
-    <Disclosure as="nav" className="bg-gray-800 sticky top-0 z-50">
+    <Disclosure as="nav" className="bg-gray-800 w-screen">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           {/* Mobile menu button*/}
@@ -59,7 +60,7 @@ const Navbar = () => {
             </Link>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex justify-between space-x-4">
-                {navigation.slice(0, 1).map((item) => (
+                {navigation.slice(0, 2).map((item) => (
                   <NavLink
                     key={item.name}
                     to={item.href}

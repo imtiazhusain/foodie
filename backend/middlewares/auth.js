@@ -5,7 +5,6 @@ const auth = async (req, res, next) => {
   try {
     // yhan hm wo token get kr rhy
     const authHeader = req.headers.authorization;
-    console.log(authHeader);
 
     if (!(authHeader && authHeader.startsWith("Bearer"))) {
       return next(CustomErrorHandler.unAuthorized());
@@ -19,8 +18,6 @@ const auth = async (req, res, next) => {
     if (!token) {
       return next(CustomErrorHandler.unAuthorized());
     }
-
-    // console.log(token)
 
     const { _id } = jwt.verify(token, ACCESS_TOKEN_SECRET);
     const user = {
