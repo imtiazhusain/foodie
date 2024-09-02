@@ -2,28 +2,33 @@ import Navbar from "@/components/Navbar";
 import React, { useEffect, useState } from "react";
 import { Sidebar } from "../Sidebar";
 import { assets } from "@/assets/assets";
-import ItemsListTable from "./ItemsListTable";
+import OrdersListTable from "./OrdersListTable";
 import { toast } from "sonner";
 import axios from "@/config/axios";
-import ListSkelton from "@/components/ListSkelton";
-// import ItemsListSkelton from "@/components/ListSkelton";
-import ItemsListPagination from "./ItemsListPagination";
+import OrdersListPagination from "./OrdersListPagination";
+import { useSelector } from "react-redux";
 import CustomPagination from "@/components/CustomPagination";
 
-const ListItems = () => {
-  const [items, setItems] = useState([]);
+const Orders = () => {
+  const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageItems, setCurrentPageItems] = useState([]);
-  const totalPages = Math.ceil(items.length / itemsPerPage);
+  const totalPages = Math.ceil(orders.length / itemsPerPage);
+  const { user } = useSelector((state) => state.auth);
   useEffect(() => {
-    const fetchItems = async () => {
+    const fetchOrders = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("/food/get_all_food_item");
-        setItems(response?.data?.data);
+        const response = await axios.get("/order/get_all_orders", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user?.access_token}`,
+          },
+        });
+        setOrders(response?.data?.data);
       } catch (error) {
         console.log(error);
         toast.error(error?.response?.data?.message || "Something went wrong");
@@ -31,20 +36,19 @@ const ListItems = () => {
         setLoading(false);
       }
     };
-    fetchItems();
-  }, []);
+    fetchOrders();
+  }, [user]);
 
   useEffect(() => {
-    if (items.length > 0) {
-      const currentItems = items.slice(
+    if (orders.length > 0) {
+      const currentItems = orders.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
       );
-      console.log(currentItems);
 
       setCurrentPageItems(currentItems);
     }
-  }, [currentPage, items]);
+  }, [currentPage, orders]);
 
   const goToPage = (page) => {
     setCurrentPage(page);
@@ -63,26 +67,26 @@ const ListItems = () => {
     }
   };
 
-  console.log(currentPageItems);
-
   return (
     <div className="flex flex-col p-4">
-      <ItemsListTable
-        items={currentPageItems}
+      <OrdersListTable
+        orders={currentPageItems}
         loading={loading}
         deleteItem={deleteItem}
       />
       <div className="self-end mt-3">
-        <CustomPagination
-          items={items}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          currentItems={currentPageItems}
-          goToPage={goToPage}
-        />
+        {totalPages > 1 && (
+          <CustomPagination
+            orders={orders}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            currentItems={currentPageItems}
+            goToPage={goToPage}
+          />
+        )}
       </div>
     </div>
   );
 };
 
-export default ListItems;
+export default Orders;

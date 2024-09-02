@@ -11,10 +11,10 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Delete, Minus, Plus, SquarePen, Trash2 } from "lucide-react";
 
-import ItemsListSkelton from "./ltemListSkelton";
+import ListSkelton from "@/components/ListSkelton";
+
 import { toast } from "sonner";
 import axios from "@/config/axios";
-
 const CartTable = ({ items, loading, deleteItem }) => {
   return (
     <>
@@ -44,7 +44,7 @@ const CartTable = ({ items, loading, deleteItem }) => {
                     {Array.from({ length: 5 }).map((_, index) => {
                       return (
                         <TableCell className="font-medium">
-                          <ItemsListSkelton />
+                          <ListSkelton />
                         </TableCell>
                       );
                     })}

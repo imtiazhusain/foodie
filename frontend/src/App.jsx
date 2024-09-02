@@ -9,7 +9,7 @@ import PlaceOrder from "./pages/place-order/PlaceOrder.page";
 import ListItems from "./pages/admin/items-list/ListItems.page";
 import AdminLayout from "./pages/admin/Layout";
 import Layout from "@/pages/Layout";
-import Orders from "./pages/admin/Orders.page";
+import Orders from "./pages/admin/orders/Orders.page";
 import AddItem from "./pages/admin/add-item/AddItem.page";
 import OrdersStatus from "./pages/placed-orders/PlacedOrders.page";
 import PlacedOrders from "./pages/placed-orders/PlacedOrders.page";

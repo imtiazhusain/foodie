@@ -53,15 +53,13 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-function MyPaginationComponent({
+function CustomPagination({
   items,
   currentPage,
   totalPages,
   currentItems,
   goToPage,
 }) {
-  console.log(items);
-
   return (
     <div>
       <Pagination>
@@ -92,4 +90,4 @@ function MyPaginationComponent({
   );
 }
 
-export default MyPaginationComponent;
+export default CustomPagination;

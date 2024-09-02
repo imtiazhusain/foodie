@@ -11,10 +11,12 @@ import { assets } from "@/assets/assets";
 const PlacedOrders = () => {
   const { user } = useSelector((state) => state.auth);
   const [ordersData, setOrdersData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getPlacedOrders = async () => {
       try {
+        setLoading(true);
         const response = await axios.get("/order/get_user_orders", {
           headers: {
             "Content-Type": "application/json",
@@ -25,6 +27,8 @@ const PlacedOrders = () => {
       } catch (error) {
         console.log(error);
         toast.error(error?.response.data?.message || "Something went wrong");
+      } finally {
+        setLoading(false);
       }
     };
     if (user) getPlacedOrders();
@@ -69,7 +73,7 @@ const PlacedOrders = () => {
           );
         })}
       </div> */}
-      <PlaceOrderTable data={ordersData} />
+      <PlaceOrderTable data={ordersData} loading={loading} />
     </div>
   );
 };

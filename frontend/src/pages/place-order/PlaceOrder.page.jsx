@@ -37,19 +37,16 @@ const PlaceOrder = () => {
 
     data?.map((item) => {
       if (cartItems[item._id] > 0) {
-        console.log(item);
-
         let itemInfo = { ...item, quantity: cartItems[item._id] };
 
         orderItems.push(itemInfo);
       }
     });
-    console.log(orderItems);
 
     let orderData = {
       address: inputs,
       items: orderItems,
-      amount: getTotalCartAmount() + 2,
+      amount: getTotalCartAmount(data, cartItems) + 2,
     };
 
     try {

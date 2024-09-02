@@ -2,6 +2,8 @@ import Stripe from "stripe";
 import { STRIPE_SECRET_KEY } from "../config/index.js";
 import orderModel from "../models/Order.model.js";
 import userModel from "../models/User.model.js";
+import mongoose from "mongoose";
+import CustomErrorHandler from "../middlewares/errors/customErrorHandler.js";
 const stripe = new Stripe(STRIPE_SECRET_KEY);
 
 class OrderController {
@@ -91,9 +93,52 @@ class OrderController {
     try {
       let ordersData = await orderModel
         .find({ user_id: req.user._id })
-        .populate({ path: "user_id", select: "name profile_pic email" });
+        .populate({ path: "user_id", select: "name profile_pic email" })
+        .sort({ createdAt: -1 });
       console.log(ordersData);
       return res.status(200).json({ status: "success", data: ordersData });
+    } catch (error) {
+      console.log(error);
+      return next(error);
+    }
+  };
+  static changeOrderStatus = async (req, res, next) => {
+    try {
+      const { orderId, status } = req.body;
+      if (!orderId)
+        return res
+          .status(422)
+          .json({ status: "fail", message: "Order ID missing" });
+      if (!status)
+        return res
+          .status(422)
+          .json({ status: "fail", message: "Order status missing" });
+
+      const isValidID = mongoose.Types.ObjectId.isValid(orderId);
+      if (!isValidID) return CustomErrorHandler.invalidId("Invalid order ID");
+
+      const UpdatedOrder = await orderModel.findByIdAndUpdate(
+        orderId,
+        { status: status },
+        { new: true }
+      );
+      console.log(UpdatedOrder);
+      return res
+        .status(200)
+        .json({ status: "success", message: "Order status Updated" });
+    } catch (error) {
+      console.log(error);
+      return next(error);
+    }
+  };
+
+  static getAllOrders = async (req, res, next) => {
+    try {
+      const orders = await orderModel.find({}).sort({ createdAt: -1 });
+      return res.status(200).json({
+        status: "success",
+        data: orders,
+      });
     } catch (error) {
       console.log(error);
       return next(error);
