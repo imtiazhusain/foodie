@@ -7,7 +7,6 @@ import { toast } from "sonner";
 import axios from "@/config/axios";
 import ListSkelton from "@/components/ListSkelton";
 // import ItemsListSkelton from "@/components/ListSkelton";
-import ItemsListPagination from "./ItemsListPagination";
 import CustomPagination from "@/components/CustomPagination";
 
 const ListItems = () => {

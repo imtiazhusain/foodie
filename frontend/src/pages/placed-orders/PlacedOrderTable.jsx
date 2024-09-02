@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useDispatch, useSelector } from "react-redux";
-import { Delete, Minus, Plus, Trash2 } from "lucide-react";
+import { Delete, Loader2, Minus, Plus, Trash2 } from "lucide-react";
 import {
   addToCartWithAPI,
   deleteCartItemWithAPI,
@@ -19,8 +19,9 @@ import { toast } from "sonner";
 import axios from "@/config/axios";
 import { assets } from "@/assets/assets";
 import ListSkelton from "@/components/ListSkelton";
+import { Button } from "@/components/ui/button";
 
-const PlaceOrderTable = ({ data, loading }) => {
+const PlaceOrderTable = ({ data, loading, setTrackOrder, trackOrder }) => {
   return (
     <>
       <Table className="w-[90vw] md:w-[80vw] ">
@@ -33,10 +34,11 @@ const PlaceOrderTable = ({ data, loading }) => {
         <TableHeader>
           <TableRow>
             <TableHead className="min-w-[100px]"></TableHead>
-            <TableHead className="min-w-[300px]">Items</TableHead>
+            <TableHead className="min-w-[280px] text-center">Items</TableHead>
             <TableHead>Total</TableHead>
             <TableHead>QTY</TableHead>
-            <TableHead className="min-w-[200px]">Status</TableHead>
+            <TableHead className="min-w-[100px]">Status</TableHead>
+            <TableHead className="">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -44,9 +46,9 @@ const PlaceOrderTable = ({ data, loading }) => {
             Array.from({ length: 10 }).map((_, index) => {
               return (
                 <TableRow key={index}>
-                  {Array.from({ length: 5 }).map((_, index) => {
+                  {Array.from({ length: 6 }).map((_, index) => {
                     return (
-                      <TableCell className="font-medium">
+                      <TableCell className="font-medium" key={index}>
                         <ListSkelton />
                       </TableCell>
                     );
@@ -58,7 +60,7 @@ const PlaceOrderTable = ({ data, loading }) => {
             <>
               {data?.map((order) => {
                 return (
-                  <TableRow>
+                  <TableRow key={order?._id}>
                     <TableCell className="font-medium">
                       <img
                         src={assets.parcel_icon}
@@ -70,12 +72,15 @@ const PlaceOrderTable = ({ data, loading }) => {
                       <div className="grid grid-cols-1 gap-1 ">
                         {order?.items.map((item, index) => {
                           return (
-                            <div className="grid grid-cols-3 place-items-start">
+                            <div
+                              className="grid grid-cols-3 place-items-start"
+                              key={index}
+                            >
                               {item.name}
-                              <span className="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10">
+                              <span className="inline-flex items-center rounded-md  px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10">
                                 QTY: {item.quantity}
                               </span>
-                              <span className="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10">
+                              <span className="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10">
                                 ${item.price}
                               </span>
                               {/* <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 ml-3">
@@ -105,6 +110,17 @@ const PlaceOrderTable = ({ data, loading }) => {
                           {order.status}
                         </span>
                       )}
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        disabled={loading}
+                        onClick={() => setTrackOrder((pre) => pre + 1)}
+                      >
+                        {loading && (
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        )}
+                        {loading ? "Please wait..." : "Track Order"}
+                      </Button>
                     </TableCell>
                   </TableRow>
                 );
