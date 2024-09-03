@@ -68,7 +68,11 @@ const Login = () => {
 
       dispatch(setUser(response?.data?.data));
       console.log(response);
-      navigate("/dashboard");
+      if (response.data.data.role === "Admin") {
+        navigate("/items-list");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (error) {
       toast.error(
         error?.response?.data?.message

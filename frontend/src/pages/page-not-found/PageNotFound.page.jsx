@@ -20,7 +20,7 @@ const PageNotFound = () => {
             className="rounded-md bg-slate-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-950"
             onClick={() => navigate(-1)}
           >
-            Go back home
+            Go back
           </button>
         </div>
       </div>

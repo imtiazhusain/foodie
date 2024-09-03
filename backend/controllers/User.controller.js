@@ -78,7 +78,7 @@ class User {
 
       user.profile_pic = `${
         process.env.SERVER_URL ? process.env.SERVER_URL : ""
-      }/public/uploads/${user.profile_pic}`;
+      }/images/uploads/${user.profile_pic}`;
 
       let userData = {
         _id: user._id,
@@ -87,6 +87,7 @@ class User {
         profile_pic: user.profile_pic,
 
         access_token: accessToken,
+        role: user.role,
       };
       res.status(200).json({
         status: "success",

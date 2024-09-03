@@ -8,8 +8,10 @@ import axios from "@/config/axios";
 import ListSkelton from "@/components/ListSkelton";
 // import ItemsListSkelton from "@/components/ListSkelton";
 import CustomPagination from "@/components/CustomPagination";
+import { useSelector } from "react-redux";
 
 const ListItems = () => {
+  const { user } = useSelector((state) => state.auth);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -21,7 +23,12 @@ const ListItems = () => {
     const fetchItems = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("/food/get_all_food_item");
+        const response = await axios.get("/food/get_all_food_item", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user?.access_token}`,
+          },
+        });
         setItems(response?.data?.data);
       } catch (error) {
         console.log(error);

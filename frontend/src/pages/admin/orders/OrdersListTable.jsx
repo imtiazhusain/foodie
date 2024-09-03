@@ -17,7 +17,7 @@ import { assets } from "@/assets/assets";
 
 import ListSkelton from "@/components/ListSkelton";
 
-const OrdersTable = ({ orders, loading, deleteItem }) => {
+const OrdersTable = ({ orders, loading }) => {
   const { user } = useSelector((state) => state.auth);
 
   const changeOrderStatus = async (event, orderId) => {

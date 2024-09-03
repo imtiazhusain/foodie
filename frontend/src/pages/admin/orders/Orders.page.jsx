@@ -69,11 +69,7 @@ const Orders = () => {
 
   return (
     <div className="flex flex-col p-4">
-      <OrdersListTable
-        orders={currentPageItems}
-        loading={loading}
-        deleteItem={deleteItem}
-      />
+      <OrdersListTable orders={currentPageItems} loading={loading} />
       <div className="self-end mt-3">
         {totalPages > 1 && (
           <CustomPagination

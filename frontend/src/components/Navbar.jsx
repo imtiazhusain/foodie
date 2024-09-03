@@ -17,6 +17,7 @@ import {
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "@/slices/authSlice";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 const navigation = [
   { name: "Home", href: "/dashboard", current: true },
   { name: "Orders", href: "/placed-orders", current: true },
@@ -31,7 +32,6 @@ const Navbar = () => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  console.log(navigation);
   return (
     <Disclosure as="nav" className="bg-gray-800 w-screen">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -60,7 +60,7 @@ const Navbar = () => {
             </Link>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex justify-between space-x-4">
-                {navigation.slice(0, 2).map((item) => (
+                {navigation.slice(0, 1).map((item) => (
                   <NavLink
                     key={item.name}
                     to={item.href}
@@ -73,6 +73,21 @@ const Navbar = () => {
                     {item.name}
                   </NavLink>
                 ))}
+                {user
+                  ? navigation.slice(1, 2).map((item) => (
+                      <NavLink
+                        key={item.name}
+                        to={item.href}
+                        className={({ isActive }) =>
+                          isActive
+                            ? " bg-gray-900 text-white px-3 py-2 font-medium rounded-md" // Add 'active' when the link is active
+                            : " bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 font-medium rounded-md"
+                        }
+                      >
+                        {item.name}
+                      </NavLink>
+                    ))
+                  : null}
               </div>
             </div>
           </div>
@@ -80,7 +95,7 @@ const Navbar = () => {
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 ">
             {!user && (
               <div className="hidden sm:block">
-                {navigation.slice(1, 3).map((item) => (
+                {navigation.slice(2, 4).map((item) => (
                   <NavLink
                     key={item.name}
                     to={item.href}
@@ -118,11 +133,24 @@ const Navbar = () => {
                   <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                     <span className="absolute -inset-1.5" />
                     <span className="sr-only">Open user menu</span>
-                    <img
-                      alt=""
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      className="h-8 w-8 rounded-full"
-                    />
+                    {/* <img
+                      alt={user?.name}
+                      // src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      src={user?.profile_pic}
+                      className="h-8 w-8 rounded-full object-cover"
+                    /> */}
+
+                    <Avatar className="w-8 h-8 rounded-full overflow-hidden">
+                      <AvatarImage
+                        src={user?.profile_pic}
+                        className="w-full h-full object-cover"
+                      />
+                      <AvatarFallback>
+                        {user?.name
+                          ? user.name.substring(0, 2).toUpperCase()
+                          : null}
+                      </AvatarFallback>
+                    </Avatar>
                   </MenuButton>
                 </div>
                 <MenuItems

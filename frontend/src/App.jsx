@@ -1,5 +1,5 @@
 import Login from "./pages/login/Login";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Signup from "./pages/signup/Signup";
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/dashboard/Dashboard.page";
@@ -14,28 +14,81 @@ import AddItem from "./pages/admin/add-item/AddItem.page";
 import OrdersStatus from "./pages/placed-orders/PlacedOrders.page";
 import PlacedOrders from "./pages/placed-orders/PlacedOrders.page";
 import VerifyOrder from "./pages/verify-order/VerifyOrder.page";
+import { useSelector } from "react-redux";
 
 function App() {
+  const { user } = useSelector((state) => state.auth);
+  const isAdmin = user?.role === "Admin";
+  console.log(isAdmin);
   return (
     <div className="font-outFit">
       <Routes>
         <Route path="/">
-          <Route element={<Layout />}>
-            <Route index element={<Login />} />
-            <Route path="login" element={<Login />} />
-            <Route path="signup" element={<Signup />} />
-            <Route path="*" element={<PageNotFound />} />
-            <Route path="cart" element={<Cart />} />
-            <Route path="place-order" element={<PlaceOrder />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="verify-order" element={<VerifyOrder />} />
-            <Route path="placed-orders" element={<PlacedOrders />} />
-          </Route>
-          <Route element={<AdminLayout />}>
-            <Route path="items-list" element={<ListItems />} />
-            <Route path="orders" element={<Orders />} />
-            <Route path="add-item" element={<AddItem />} />
-          </Route>
+          {/* <Route
+            index
+            element={
+              !user ? <Login /> : isAdmin ? <ListItems /> : <Dashboard />
+            }
+          /> */}
+
+          {!isAdmin && (
+            <Route element={<Layout />}>
+              <Route index element={!user ? <Login /> : <Dashboard />} />
+              <Route
+                path="login"
+                element={!user ? <Login /> : <Navigate to="/dashboard" />}
+              />
+              <Route
+                path="signup"
+                element={!user ? <Signup /> : <Navigate to="/dashboard" />}
+              />
+              <Route path="cart" element={<Cart />} />
+              <Route path="place-order" element={<PlaceOrder />} />
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route
+                path="verify-order"
+                element={user ? <VerifyOrder /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="placed-orders"
+                element={user ? <PlacedOrders /> : <Navigate to="/login" />}
+              />
+              <Route path="*" element={<PageNotFound />} />
+            </Route>
+          )}
+          {isAdmin && (
+            <Route element={<AdminLayout />}>
+              <Route index element={!user ? <Login /> : <ListItems />} />
+
+              <Route
+                path="items-list"
+                element={
+                  user?.role === "Admin" ? (
+                    <ListItems />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
+              <Route
+                path="orders"
+                element={
+                  user?.role === "Admin" ? <Orders /> : <Navigate to="/login" />
+                }
+              />
+              <Route
+                path="add-item"
+                element={
+                  user?.role === "Admin" ? (
+                    <AddItem />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
+              <Route path="*" element={<PageNotFound />} />
+            </Route>
+          )}
 
           {/* <Route path="profile" element={userData ? <Profile /> : <Login />} /> */}
         </Route>

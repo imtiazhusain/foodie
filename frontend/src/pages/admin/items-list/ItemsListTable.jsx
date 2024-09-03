@@ -15,7 +15,7 @@ import ListSkelton from "@/components/ListSkelton";
 
 import { toast } from "sonner";
 import axios from "@/config/axios";
-const CartTable = ({ items, loading, deleteItem }) => {
+const ItemsListTable = ({ items, loading, deleteItem }) => {
   return (
     <>
       <Table className="">
@@ -43,7 +43,7 @@ const CartTable = ({ items, loading, deleteItem }) => {
                   <TableRow key={index}>
                     {Array.from({ length: 5 }).map((_, index) => {
                       return (
-                        <TableCell className="font-medium">
+                        <TableCell className="font-medium" key={index}>
                           <ListSkelton />
                         </TableCell>
                       );
@@ -51,9 +51,9 @@ const CartTable = ({ items, loading, deleteItem }) => {
                   </TableRow>
                 );
               })
-            : items.map((item) => {
+            : items.map((item, index) => {
                 return (
-                  <TableRow>
+                  <TableRow key={index}>
                     <TableCell className="font-medium">
                       <img
                         src={item?.image}
@@ -86,4 +86,4 @@ const CartTable = ({ items, loading, deleteItem }) => {
   );
 };
 
-export default CartTable;
+export default ItemsListTable;

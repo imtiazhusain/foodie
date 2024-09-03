@@ -4,7 +4,7 @@ import { ACCESS_TOKEN_SECRET } from "../config/index.js";
 
 const generateJwtTokens = async (user) => {
   try {
-    const payload = { _id: user._id };
+    const payload = { _id: user._id, role: user?.role };
     const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, {
       expiresIn: "30d",
     });

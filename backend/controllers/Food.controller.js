@@ -38,6 +38,7 @@ class FoodController {
     }
   };
   static listAllFoodItems = async (req, res, next) => {
+    console.log("inside food items.../..//.//./");
     try {
       const allFoodItems = await foodItemModel.find({});
 

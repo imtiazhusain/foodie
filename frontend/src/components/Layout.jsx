@@ -1,12 +1,12 @@
+import Navbar from "@/components/Navbar";
 import React from "react";
 import { Sidebar } from "./Sidebar";
 
 import { Outlet } from "react-router-dom";
-import AdminNavbar from "@/components/AdminNavbar";
 const Layout = () => {
   return (
     <div>
-      <AdminNavbar />
+      <Navbar />
       <div className="grid grid-cols-12">
         <div className="col-span-4 ">
           <Sidebar />
