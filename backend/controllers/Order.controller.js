@@ -1,15 +1,15 @@
 import Stripe from "stripe";
-import { STRIPE_SECRET_KEY } from "../config/index.js";
+import { STRIPE_SECRET_KEY, SERVER_URL } from "../config/index.js";
 import orderModel from "../models/Order.model.js";
 import userModel from "../models/User.model.js";
 import mongoose from "mongoose";
 import CustomErrorHandler from "../middlewares/errors/customErrorHandler.js";
+
 const stripe = new Stripe(STRIPE_SECRET_KEY);
 
 class OrderController {
   static placeOrder = async (req, res, next) => {
     try {
-      const FRONTEND_URL = "http://localhost:5173";
       const { items, amount, address } = req.body;
       const newOrder = new orderModel({
         user_id: req.user._id,
@@ -46,8 +46,8 @@ class OrderController {
       const session = await stripe.checkout.sessions.create({
         line_items: line_items,
         mode: "payment",
-        success_url: `${FRONTEND_URL}/verify-order?success=true&orderId=${newOrder._id}`,
-        cancel_url: `${FRONTEND_URL}/verify-order?success=false&orderId=${newOrder._id}`,
+        success_url: `${SERVER_URL}/verify-order?success=true&orderId=${newOrder._id}`,
+        cancel_url: `${SERVER_URL}/verify-order?success=false&orderId=${newOrder._id}`,
       });
 
       return res.status(200).json({

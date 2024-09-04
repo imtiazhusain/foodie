@@ -33,7 +33,7 @@ const VerifyOrder = () => {
           toast.success("Order Completed successfully");
           navigate("/placed-orders");
         } else {
-          toast.success("Order failed please try again");
+          toast.error("Order failed please try again");
 
           navigate("/place-order");
         }
