@@ -14,7 +14,7 @@ import {
   ShoppingCartIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "@/slices/authSlice";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -27,11 +27,19 @@ const navigation = [
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-const Navbar = () => {
+const Navbar = ({ setOpenProfileModel }) => {
   const TotalCartItems = useSelector((state) => state.cart.totalItems);
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const handleEditProfile = () => {
+    setOpenProfileModel(true);
+  };
+  const handleLogout = () => {
+    navigate("/login");
+    dispatch(logoutUser());
+  };
   return (
     <Disclosure as="nav" className="bg-gray-800 w-screen">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -133,12 +141,6 @@ const Navbar = () => {
                   <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                     <span className="absolute -inset-1.5" />
                     <span className="sr-only">Open user menu</span>
-                    {/* <img
-                      alt={user?.name}
-                      // src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      src={user?.profile_pic}
-                      className="h-8 w-8 rounded-full object-cover"
-                    /> */}
 
                     <Avatar className="w-8 h-8 rounded-full overflow-hidden">
                       <AvatarImage
@@ -158,24 +160,17 @@ const Navbar = () => {
                   className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                 >
                   <MenuItem>
-                    <a
-                      href="#"
+                    <button
                       className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                      onClick={handleEditProfile}
                     >
                       Your Profile
-                    </a>
+                    </button>
                   </MenuItem>
-                  <MenuItem>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
-                    >
-                      Settings
-                    </a>
-                  </MenuItem>
+
                   <MenuItem>
                     <button
-                      // onClick={dispatch(logoutUser())}
+                      onClick={handleLogout}
                       className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                     >
                       Sign out
@@ -208,7 +203,21 @@ const Navbar = () => {
               {item.name}
             </DisclosureButton>
           ))}
-
+          {user
+            ? navigation.slice(1, 2).map((item) => (
+                <NavLink
+                  key={item.name}
+                  to={item.href}
+                  className={({ isActive }) =>
+                    isActive
+                      ? " bg-gray-900 text-white px-3 py-2 font-medium rounded-md" // Add 'active' when the link is active
+                      : " bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 font-medium rounded-md"
+                  }
+                >
+                  {item.name}
+                </NavLink>
+              ))
+            : null}
           {!user &&
             navigation.slice(1, 3).map((item) => (
               <DisclosureButton

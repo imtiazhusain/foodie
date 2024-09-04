@@ -3,9 +3,11 @@ import { Button } from "@/components/ui/button";
 import axios from "@/config/axios";
 import { Loader2 } from "lucide-react";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { toast } from "sonner";
 
 const AddItem = () => {
+  const { user } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(null);
   const [data, setData] = useState({
@@ -15,6 +17,7 @@ const AddItem = () => {
     price: "",
   });
 
+  console.log(image);
   const handleOnchange = (e) => {
     const { name, value } = e.target;
     setData((pre) => ({ ...pre, [name]: value }));
@@ -36,7 +39,12 @@ const AddItem = () => {
     formData.append("price", data.price);
     formData.append("image", image);
     try {
-      let result = await axios.post("/food/add_item", formData);
+      let result = await axios.post("/food/add_item", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data ",
+          Authorization: `Bearer ${user?.access_token}`,
+        },
+      });
       toast.success("Product added successfully");
 
       setData({
@@ -55,11 +63,11 @@ const AddItem = () => {
   };
   return (
     <div className="mx-auto w-full ">
-      <div className="flex flex-col items-start justify-center gap-7">
+      <div className="flex flex-col items-start justify-center gap-7 ">
         <h2 className="font-semibold text-lg">Add New Item</h2>
         <form
           action=""
-          className="flex flex-col gap-4"
+          className="flex flex-col gap-4  "
           onSubmit={handleOnSubmit}
         >
           <div>
@@ -68,7 +76,7 @@ const AddItem = () => {
               <img
                 src={image ? URL.createObjectURL(image) : assets.upload_area}
                 alt="upload image"
-                className="w-28"
+                className="max-w-28"
               />
             </label>
             <input
@@ -107,7 +115,7 @@ const AddItem = () => {
             ></textarea>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid  xs:grid-cols-2 gap-3 ">
             <div className="flex flex-col gap-2 ">
               <label htmlFor="category" className="text-gray-500">
                 Product Category

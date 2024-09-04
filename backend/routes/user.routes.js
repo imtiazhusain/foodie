@@ -9,5 +9,11 @@ router.post("/register_user", upload.single("profile_pic"), User.registerUser);
 
 router.post("/login", User.login);
 router.post("/logout", authMiddleware, User.logout);
+router.put(
+  "/update_user",
+  authMiddleware,
+  upload.single("profile_pic"),
+  User.editUser
+);
 
 export default router;

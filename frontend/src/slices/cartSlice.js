@@ -30,7 +30,6 @@ export const addToCartWithAPI = createAsyncThunk(
         });
       }
     } else {
-      console.log("esle bloack executed,,,,");
       // If the user is not logged in, reject the action
       return { itemId, message: "User not logged in" };
     }
@@ -140,6 +139,32 @@ export const getCartDataFromApi = createAsyncThunk(
     return response; // Return the itemId to be used in the reducer
   }
 );
+
+// function mergeCartData(existing, newData) {
+//   for (let key in newData) {
+//     if (existing.hasOwnProperty(key)) {
+//       existing[key] += newData[key];
+//     } else {
+//       existing[key] = newData[key];
+//     }
+//   }
+// }
+
+function mergeCartData(existing, newData) {
+  for (let key in newData) {
+    if (existing.hasOwnProperty(key)) {
+      console.log("key matched//....");
+      existing[key] += newData[key];
+    } else {
+      existing[key] = newData[key];
+    }
+  }
+  let numberOfUniqueItems = Object.keys(existing).length;
+  return {
+    updatedData: existing,
+    totalItemCart: numberOfUniqueItems,
+  };
+}
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
@@ -259,14 +284,16 @@ export const cartSlice = createSlice({
       }
     });
 
-    // builder.addCase(deleteCartItemWithAPI.fulfilled, (state, action) => {
-    //   const itemId = action.payload;
-    //   delete state.items[itemId];
-    //   state.totalItems -= 1;
-    // });
     builder.addCase(getCartDataFromApi.fulfilled, (state, action) => {
-      state.items = action.payload.cartData;
-      state.totalItems = action.payload.totalCartItems;
+      const { totalItemCart, updatedData } = mergeCartData(
+        state.items,
+        action.payload.cartData
+      );
+      console.log("....///...//");
+      console.log(totalItemCart);
+      console.log(updatedData);
+      state.items = updatedData;
+      state.totalItems = totalItemCart;
     });
     builder.addCase(getCartDataFromApi.rejected, (state, action) => {
       console.log("rejected......");

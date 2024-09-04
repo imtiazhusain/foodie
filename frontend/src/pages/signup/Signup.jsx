@@ -66,7 +66,6 @@ const Signup = () => {
   };
 
   return (
-    // <div className="h-svh md:h-screen  flex flex-col ">
     <div className=" flex-grow grid place-content-center ">
       <div className=" bg-white w-80 border border-gray-300 md:w-[512px]  p-4 rounded-md ">
         <div className="mb-4">
@@ -196,7 +195,6 @@ const Signup = () => {
         </form>
       </div>
     </div>
-    // </div>
   );
 };
 

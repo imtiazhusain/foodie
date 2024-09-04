@@ -89,7 +89,7 @@ const Login = () => {
     <>
       {/* <Navbar /> */}
 
-      <div className=" flex-grow grid place-content-center ">
+      <div className=" flex-grow grid place-content-center justify-around">
         <div className="bg-white w-80 border border-gray-300  p-4 rounded-md ">
           <h1 className=" text-center font-bold text-2xl tracking-wide ">
             Welcome Back!

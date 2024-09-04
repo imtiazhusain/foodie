@@ -5,6 +5,8 @@ import bcrypt from "bcrypt";
 
 import joiValidation from "../utils/joiValidation.js";
 import generateJwtTokens from "../utils/generateJwtTokens.js";
+import mongoose from "mongoose";
+import HelperMethods from "../utils/helper.js";
 class User {
   static registerUser = async (req, res, next) => {
     try {
@@ -51,6 +53,91 @@ class User {
     }
   };
 
+  static editUser = async (req, res, next) => {
+    try {
+      // here i also coment 2 lines bcz i am not using multer here
+      // req.body.profile_pic = req?.file?.filename;
+      const profile_pic = req?.file?.filename;
+
+      const { name, email, user_id, password } = req.body;
+
+      if (req?.body?.profile_pic) {
+        delete req.body.profile_pic;
+      }
+
+      // validation
+      const isValidID = mongoose.Types.ObjectId.isValid(user_id);
+
+      if (!isValidID) {
+        return next(CustomErrorHandler.invalidId("Invalid user ID"));
+      }
+      const { error } = joiValidation.editUser(req.body);
+
+      if (error) {
+        console.log(error.message);
+        return next(error);
+      }
+
+      const exist = await userModel.exists({
+        email: email,
+        _id: { $ne: user_id },
+      });
+
+      if (exist) {
+        return next(
+          CustomErrorHandler.alreadyExist("This email is already taken")
+        );
+      }
+
+      let hashedPassword;
+      if (password) {
+        hashedPassword = await bcrypt.hash(password, 10);
+      }
+
+      let userUpdatedData = {
+        name: name,
+        email: email,
+        profile_pic: profile_pic ? profile_pic : null,
+        ...(hashedPassword && { password: hashedPassword }),
+      };
+
+      if (!userUpdatedData?.profile_pic) {
+        delete userUpdatedData.profile_pic;
+      }
+
+      let userPreviousData = await userModel.findById(user_id);
+
+      if (userPreviousData?.profile_pic) {
+        HelperMethods.deleteFileIfExists(userPreviousData.profile_pic);
+      }
+
+      const updatedUser = await userModel.findByIdAndUpdate(
+        user_id,
+        userUpdatedData,
+        { new: true } // Return the updated document
+      );
+
+      updatedUser.profile_pic = `${
+        process.env.SERVER_URL ? process.env.SERVER_URL : ""
+      }/images/uploads/${updatedUser.profile_pic}`;
+
+      let userData = {
+        email: updatedUser.email,
+        name: updatedUser.name,
+        profile_pic: updatedUser.profile_pic,
+      };
+
+      return res.status(201).json({
+        status: "success",
+        message: "User updated successfully",
+        data: userData,
+      });
+    } catch (error) {
+      console.log(error);
+      return next(error);
+    }
+  };
+
   static login = async (req, res, next) => {
     try {
       // validation
@@ -61,7 +148,6 @@ class User {
       }
 
       const user = await userModel.findOne({ email: req.body.email });
-      console.log(user.cart_data);
       if (!user) {
         return next(CustomErrorHandler.wrongCredentials());
       }

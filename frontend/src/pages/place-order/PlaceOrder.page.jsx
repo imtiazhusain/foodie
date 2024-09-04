@@ -70,8 +70,8 @@ const PlaceOrder = () => {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8  flex-grow grid place-content-normal w-[90vw]  ">
-      <div className="flex justify-between items-center flex-wrap   content-center gap-5">
-        <div className=" grid grid-cols-2 grid-rows-4 grid-flow-row  gap-3 w-full md:w-auto">
+      <div className="flex justify-between items-center flex-wrap   gap-5">
+        <div className=" grid grid-cols-2 grid-rows-4 grid-flow-row  gap-3 w-full md:w-auto bg-white p-4 rounded-md border border-gray-200">
           <h2 className="font-semibold col-span-2 mb-3 text-slate-900 text-lg">
             Delivery Information
           </h2>
@@ -177,7 +177,7 @@ const PlaceOrder = () => {
             {loading ? "Please wait..." : "PROCEED TO PAYMENT"}
           </Button>
         </div>
-        <div className=" text-gray-500 space-y-3 w-full md:w-auto">
+        <div className=" text-gray-500 space-y-3 w-full md:w-[30%] border border-gray-300 p-4 rounded-md bg-white">
           <h2 className="font-semibold mb-3 text-slate-900 text-lg">
             Cart Totals
           </h2>
