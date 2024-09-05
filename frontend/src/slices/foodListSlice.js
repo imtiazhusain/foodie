@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 // Action
 export const fetchProducts = createAsyncThunk("fetchProducts", async () => {
-  const response = await axios.get("/food/get_all_food_itemddd");
+  const response = await axios.get("/food/get_all_food_item");
 
   return response?.data?.data;
 });
