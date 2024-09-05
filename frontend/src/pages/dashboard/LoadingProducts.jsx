@@ -3,7 +3,7 @@ import React from "react";
 
 const LoadingProducts = () => {
   return (
-    <div className="mt-16  grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))]    gap-y-6 gap-x-3 place-content-center w-full place-items-center">
+    <div className="mt-16  grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))]    gap-y-6 gap-x-10 place-content-center w-full place-items-center">
       {Array.from({ length: 8 }).map((_, index) => {
         return (
           <div

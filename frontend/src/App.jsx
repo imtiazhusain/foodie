@@ -30,11 +30,7 @@ function App() {
   console.log(isAdmin);
   return (
     <div className="font-outFit">
-      <Suspense
-        fallback={
-          <div className="gird place-content-center  h-screen ">loading...</div>
-        }
-      >
+      <Suspense fallback={<div className="">loading...</div>}>
         <Routes>
           <Route path="/">
             {!isAdmin && (

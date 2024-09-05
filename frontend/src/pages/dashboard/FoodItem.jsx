@@ -10,15 +10,18 @@ const FoodItem = ({ addToCartClicked, handleAddToCardClicked, food }) => {
   const dispatch = useDispatch();
   return (
     <div
-      className="rounded-md h-[330px] bg-white max-w-[250px] shadow-md transition-all duration-300 animate-fadeIn  "
+      className="rounded-md h-[350px] xs:h-[330px] bg-white xs:max-w-[250px] max-w-[300px] shadow-md transition-all duration-300 animate-fadeIn  "
       key={food?._id}
     >
       <div className="relative">
-        <img
-          src={food?.image}
-          alt={food?.name}
-          className="w-full rounded-t-md"
-        />
+        <div className="xs:w-[250px] bg-gray-200 xs:h-[194.44px] max-w-[300px]">
+          <img
+            src={food?.image}
+            alt={food?.name}
+            className="w-full rounded-t-md"
+            loading="lazy"
+          />
+        </div>
         {cartItems[food?._id] ? (
           <div className="absolute bottom-3 right-4 h-7 w-18 rounded-full bg-white grid place-content-center font-medium p-1">
             <div className="flex gap-2 justify-evenly">

@@ -18,7 +18,7 @@ const FoodItems = ({ category }) => {
   return (
     <div>
       <h2 className="font-bold text-lg lg:text-xl mt-6">Top Dishes </h2>
-      <div className="mt-16  grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))]    gap-y-6 gap-x-3 place-content-center w-full place-items-center ">
+      <div className="mt-16  grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))]    gap-y-6 gap-x-5 lg:gap-x-8 place-content-center w-full place-items-center ">
         {isLoading ? (
           <LoadingProducts />
         ) : (

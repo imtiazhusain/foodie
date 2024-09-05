@@ -68,34 +68,23 @@ const Navbar = ({ setOpenProfileModel }) => {
             </Link>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex justify-between space-x-4">
-                {navigation.slice(0, 1).map((item) => (
-                  <NavLink
-                    key={item.name}
-                    to={item.href}
-                    className={({ isActive }) =>
-                      isActive
-                        ? " bg-gray-900 text-white px-3 py-2 font-medium rounded-md" // Add 'active' when the link is active
-                        : " bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 font-medium rounded-md"
-                    }
-                  >
-                    {item.name}
-                  </NavLink>
-                ))}
-                {user
-                  ? navigation.slice(1, 2).map((item) => (
-                      <NavLink
-                        key={item.name}
-                        to={item.href}
-                        className={({ isActive }) =>
-                          isActive
-                            ? " bg-gray-900 text-white px-3 py-2 font-medium rounded-md" // Add 'active' when the link is active
-                            : " bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 font-medium rounded-md"
-                        }
-                      >
-                        {item.name}
-                      </NavLink>
-                    ))
-                  : null}
+                {navigation.slice(0, 2).map((item, index) => {
+                  if (index === 1 && !user) return null;
+
+                  return (
+                    <NavLink
+                      key={item.name}
+                      to={item.href}
+                      className={({ isActive }) =>
+                        isActive
+                          ? " bg-gray-900 text-white px-3 py-2 font-medium rounded-md" // Add 'active' when the link is active
+                          : " bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 font-medium rounded-md"
+                      }
+                    >
+                      {item.name}
+                    </NavLink>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -161,7 +150,7 @@ const Navbar = ({ setOpenProfileModel }) => {
                 >
                   <MenuItem>
                     <button
-                      className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                      className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 w-full"
                       onClick={handleEditProfile}
                     >
                       Your Profile
@@ -171,7 +160,7 @@ const Navbar = ({ setOpenProfileModel }) => {
                   <MenuItem>
                     <button
                       onClick={handleLogout}
-                      className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                      className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 w-full"
                     >
                       Sign out
                     </button>
@@ -185,25 +174,29 @@ const Navbar = ({ setOpenProfileModel }) => {
 
       <DisclosurePanel className="sm:hidden">
         <div className="space-y-1 px-2 pb-3 pt-2">
-          {navigation.slice(0, 1).map((item) => (
-            <DisclosureButton
-              key={item.name}
-              as={NavLink}
-              to={item.href}
-              className={({ isActive }) => {
-                console.log(item.name, isActive); // Check if isActive toggles as expected
-                return classNames(
-                  isActive
-                    ? "bg-gray-900 text-white"
-                    : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                  "block rounded-md px-3 py-2 text-base font-medium"
-                );
-              }}
-            >
-              {item.name}
-            </DisclosureButton>
-          ))}
-          {user
+          {navigation.map((item, index) => {
+            if (index === 1 && !user) return null;
+            if (index > 1 && user) return null;
+            return (
+              <DisclosureButton
+                key={item.name}
+                as={NavLink}
+                to={item.href}
+                className={({ isActive }) => {
+                  console.log(item.name, isActive); // Check if isActive toggles as expected
+                  return classNames(
+                    isActive
+                      ? "bg-gray-900 text-white"
+                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                    "block rounded-md px-3 py-2 text-base font-medium"
+                  );
+                }}
+              >
+                {item.name}
+              </DisclosureButton>
+            );
+          })}
+          {/* {user
             ? navigation.slice(1, 2).map((item) => (
                 <NavLink
                   key={item.name}
@@ -217,8 +210,8 @@ const Navbar = ({ setOpenProfileModel }) => {
                   {item.name}
                 </NavLink>
               ))
-            : null}
-          {!user &&
+            : null} */}
+          {/* {!user &&
             navigation.slice(1, 3).map((item) => (
               <DisclosureButton
                 key={item.name}
@@ -236,7 +229,7 @@ const Navbar = ({ setOpenProfileModel }) => {
               >
                 {item.name}
               </DisclosureButton>
-            ))}
+            ))} */}
         </div>
       </DisclosurePanel>
     </Disclosure>
