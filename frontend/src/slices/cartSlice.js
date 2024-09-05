@@ -135,16 +135,6 @@ export const getCartDataFromApi = createAsyncThunk(
   }
 );
 
-// function mergeCartData(existing, newData) {
-//   for (let key in newData) {
-//     if (existing.hasOwnProperty(key)) {
-//       existing[key] += newData[key];
-//     } else {
-//       existing[key] = newData[key];
-//     }
-//   }
-// }
-
 function mergeCartData(existing, newData) {
   for (let key in newData) {
     if (existing.hasOwnProperty(key)) {

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Dialog from "./Dialog";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
-import { Camera, CircleX, X } from "lucide-react";
+import { Camera, X } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import axios from "@/config/axios";
 import { setUser } from "@/slices/authSlice";

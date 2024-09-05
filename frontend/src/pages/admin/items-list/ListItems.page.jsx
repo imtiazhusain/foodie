@@ -1,12 +1,9 @@
 import Navbar from "@/components/Navbar";
 import React, { useEffect, useState } from "react";
-import { Sidebar } from "../Sidebar";
-import { assets } from "@/assets/assets";
 import ItemsListTable from "./ItemsListTable";
 import { toast } from "sonner";
 import axios from "@/config/axios";
-import ListSkelton from "@/components/ListSkelton";
-// import ItemsListSkelton from "@/components/ListSkelton";
+
 import CustomPagination from "@/components/CustomPagination";
 import { useSelector } from "react-redux";
 
@@ -57,7 +54,12 @@ const ListItems = () => {
 
   const deleteItem = async (ID) => {
     try {
-      const response = await axios.delete(`/food/delete_food_item/${ID}`);
+      const response = await axios.delete(`/food/delete_food_item/${ID}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user?.access_token}`,
+        },
+      });
       toast.success("Item deleted successfully");
       setCurrentPageItems((currentItems) =>
         currentItems.filter((item) => item._id !== ID)

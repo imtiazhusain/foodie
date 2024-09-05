@@ -1,9 +1,8 @@
-import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import axios from "@/config/axios";
 import getTotalCartAmount from "@/lib/getTotalCartAmount";
 import { Loader2 } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "sonner";
 

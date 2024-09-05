@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "../../config/axios";
-import Navbar from "../../components/Navbar";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";

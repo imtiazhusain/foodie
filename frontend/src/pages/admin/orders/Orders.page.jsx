@@ -1,11 +1,8 @@
-import Navbar from "@/components/Navbar";
 import React, { useEffect, useState } from "react";
-import { Sidebar } from "../Sidebar";
-import { assets } from "@/assets/assets";
+
 import OrdersListTable from "./OrdersListTable";
 import { toast } from "sonner";
 import axios from "@/config/axios";
-import OrdersListPagination from "./OrdersListPagination";
 import { useSelector } from "react-redux";
 import CustomPagination from "@/components/CustomPagination";
 

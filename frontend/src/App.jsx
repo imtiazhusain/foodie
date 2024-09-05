@@ -4,8 +4,6 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "@/pages/Layout";
 import AdminLayout from "./pages/admin/Layout";
 import { useSelector } from "react-redux";
-import { Button } from "./components/ui/button";
-import { Loader2 } from "lucide-react";
 
 // Lazy load the route components
 const Login = lazy(() => import("./pages/login/Login"));
@@ -94,8 +92,6 @@ function App() {
                 <Route path="*" element={<PageNotFound />} />
               </Route>
             )}
-
-            {/* <Route path="profile" element={userData ? <Profile /> : <Login />} /> */}
           </Route>
         </Routes>
       </Suspense>

@@ -1,11 +1,9 @@
-import { assets } from "@/assets/assets";
 import { Minus, Plus } from "lucide-react";
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCartWithAPI, removeCartItemWithAPI } from "@/slices/cartSlice";
 
-const FoodItem = ({ addToCartClicked, handleAddToCardClicked, food }) => {
-  const [itemCount, setItemCount] = useState(0);
+const FoodItem = ({ food }) => {
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
   return (

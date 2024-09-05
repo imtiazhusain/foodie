@@ -36,9 +36,9 @@ app.use("/api/order", orderRoutes);
 app.use(errorHandler);
 
 // all routes that does not match then this will be called but commented for deployment purpose because of we send index.html file if no path matched
-// app.use((req, res) => {
-//   res.status(404).json({ status: "ERROR", message: "Page not Found" });
-// });
+app.use("/api*", (req, res) => {
+  res.status(404).json({ status: "ERROR", message: "Page not Found" });
+});
 
 // this line is for deployment
 app.get("*", (req, res) => {

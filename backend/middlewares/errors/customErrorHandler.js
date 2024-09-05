@@ -1,7 +1,5 @@
 class CustomErrorHandler extends Error {
   constructor(status, message) {
-    // ye super hm Error  class ka construcote kr rhy ye zrori hai
-    // jn ap kisi class ko extend krty ho
     super();
     this.status = status;
     this.message = message;

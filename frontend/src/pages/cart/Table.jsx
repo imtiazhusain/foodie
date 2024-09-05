@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useDispatch, useSelector } from "react-redux";
-import { Delete, Minus, Plus, Trash2 } from "lucide-react";
+import { Minus, Plus, Trash2 } from "lucide-react";
 import {
   addToCartWithAPI,
   deleteCartItemWithAPI,
@@ -44,7 +44,7 @@ const CartTable = () => {
           {data?.map((item) => {
             if (cartItems[item._id] > 0) {
               return (
-                <TableRow>
+                <TableRow key={item._id}>
                   <TableCell className="font-medium">
                     <img
                       src={item?.image}

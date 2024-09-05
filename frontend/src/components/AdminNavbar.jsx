@@ -2,19 +2,13 @@ import React, { useState } from "react";
 import { assets } from "../assets/assets";
 import {
   Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
   Menu,
   MenuButton,
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
-import {
-  Bars3Icon,
-  ShoppingCartIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "@/slices/authSlice";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -23,11 +17,8 @@ const navigation = [
   { name: "Login", href: "/login", current: false },
   { name: "Signup", href: "/signup", current: false },
 ];
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+
 const AdminNavbar = ({ setOpenProfileModel }) => {
-  const TotalCartItems = useSelector((state) => state.cart.totalItems);
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -77,7 +68,7 @@ const AdminNavbar = ({ setOpenProfileModel }) => {
                 >
                   <MenuItem>
                     <button
-                      className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                      className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 w-full"
                       onClick={handleEditProfile}
                     >
                       Your Profile
@@ -87,7 +78,7 @@ const AdminNavbar = ({ setOpenProfileModel }) => {
                   <MenuItem>
                     <button
                       onClick={handleLogout}
-                      className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                      className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 w-full"
                     >
                       Sign out
                     </button>

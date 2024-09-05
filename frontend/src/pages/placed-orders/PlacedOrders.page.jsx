@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import React, { useEffect, useState } from "react";
 import PlaceOrderTable from "./PlacedOrderTable";
 
@@ -6,7 +5,6 @@ import { useSelector } from "react-redux";
 
 import { toast } from "sonner";
 import axios from "@/config/axios";
-import { assets } from "@/assets/assets";
 
 const PlacedOrders = () => {
   const { user } = useSelector((state) => state.auth);
@@ -40,7 +38,6 @@ const PlacedOrders = () => {
         data={ordersData}
         loading={loading}
         setTrackOrder={setTrackOrder}
-        trackOrder={trackOrder}
       />
     </div>
   );

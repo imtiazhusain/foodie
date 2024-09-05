@@ -1,4 +1,3 @@
-import Dialog from "@/components/Dialog";
 import Navbar from "@/components/Navbar";
 import ProfileModel from "@/components/ProfileModel";
 import { getCartDataFromApi } from "@/slices/cartSlice";

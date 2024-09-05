@@ -1,7 +1,6 @@
 import CustomErrorHandler from "./errors/customErrorHandler.js";
 import jwt from "jsonwebtoken";
 import { ACCESS_TOKEN_SECRET } from "../config/index.js";
-import userModel from "../models/User.model.js";
 const auth = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;

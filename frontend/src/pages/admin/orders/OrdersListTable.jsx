@@ -8,8 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useDispatch, useSelector } from "react-redux";
-import { Delete, Minus, Plus, SquarePen, Trash2 } from "lucide-react";
+import { useSelector } from "react-redux";
 
 import { toast } from "sonner";
 import axios from "@/config/axios";
@@ -99,12 +98,6 @@ const OrdersTable = ({ orders, loading }) => {
                               <span className="inline-flex items-center rounded-md  px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10">
                                 ${item.price}
                               </span>
-                              {/* <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 ml-3">
-                            QTY: {item.quantity}
-                          </span>
-                          <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 ml-1">
-                            ${item.price}
-                          </span> */}
                             </div>
                           );
                         })}

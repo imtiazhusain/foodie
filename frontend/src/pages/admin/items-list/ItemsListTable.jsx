@@ -8,13 +8,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useDispatch, useSelector } from "react-redux";
-import { Delete, Minus, Plus, SquarePen, Trash2 } from "lucide-react";
+import { SquarePen, Trash2 } from "lucide-react";
 
 import ListSkelton from "@/components/ListSkelton";
 
-import { toast } from "sonner";
-import axios from "@/config/axios";
 const ItemsListTable = ({ items, loading, deleteItem }) => {
   return (
     <>

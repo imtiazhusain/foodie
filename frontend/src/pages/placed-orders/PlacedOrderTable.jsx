@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Table,
   TableBody,
@@ -8,20 +8,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useDispatch, useSelector } from "react-redux";
-import { Delete, Loader2, Minus, Plus, Trash2 } from "lucide-react";
-import {
-  addToCartWithAPI,
-  deleteCartItemWithAPI,
-  removeCartItemWithAPI,
-} from "@/slices/cartSlice";
-import { toast } from "sonner";
-import axios from "@/config/axios";
+
+import { Loader2 } from "lucide-react";
+
 import { assets } from "@/assets/assets";
 import ListSkelton from "@/components/ListSkelton";
 import { Button } from "@/components/ui/button";
 
-const PlaceOrderTable = ({ data, loading, setTrackOrder, trackOrder }) => {
+const PlaceOrderTable = ({ data, loading, setTrackOrder }) => {
   return (
     <>
       <Table className="w-[90vw] md:w-[80vw] ">

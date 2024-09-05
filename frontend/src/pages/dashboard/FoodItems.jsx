@@ -1,38 +1,31 @@
 import React, { useEffect, useState } from "react";
 import FoodItem from "./FoodItem";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import LoadingProducts from "./LoadingProducts";
+import { toast } from "sonner";
 
-// import fetchProducts from ''
 const FoodItems = ({ category }) => {
-  const dispatch = useDispatch();
   const { isLoading, isError, data } = useSelector(
     (state) => state.productsList
   );
 
-  const [addToCartClicked, setAddToCartClicked] = useState(false);
+  useEffect(() => {
+    if (isError) toast.error("Something went wrong");
+  }, [isError]);
 
-  const handleAddToCardClicked = () => {
-    setAddToCartClicked((pre) => !pre);
-  };
   return (
     <div>
       <h2 className="font-bold text-lg lg:text-xl mt-6">Top Dishes </h2>
       <div className="mt-16  grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))]    gap-y-6 gap-x-5 lg:gap-x-8 place-content-center w-full place-items-center ">
         {isLoading ? (
           <LoadingProducts />
-        ) : (
+        ) : data?.length > 0 ? (
           data?.map((food) => {
             if (category === "All" || category === food.category)
-              return (
-                <FoodItem
-                  key={food._id}
-                  food={food}
-                  addToCartClicked={addToCartClicked}
-                  handleAddToCardClicked={handleAddToCardClicked}
-                />
-              );
+              return <FoodItem key={food._id} food={food} />;
           })
+        ) : (
+          <span className="text-gray-500">No Data Found</span>
         )}
       </div>
     </div>
