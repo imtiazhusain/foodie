@@ -27,7 +27,6 @@ const VerifyOrder = lazy(() => import("./pages/verify-order/VerifyOrder.page"));
 function App() {
   const { user } = useSelector((state) => state.auth);
   const isAdmin = user?.role === "Admin";
-  console.log(isAdmin);
   return (
     <div className="font-outFit">
       <Suspense fallback={<div className="">loading...</div>}>

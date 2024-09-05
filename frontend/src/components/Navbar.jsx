@@ -183,7 +183,6 @@ const Navbar = ({ setOpenProfileModel }) => {
                 as={NavLink}
                 to={item.href}
                 className={({ isActive }) => {
-                  console.log(item.name, isActive); // Check if isActive toggles as expected
                   return classNames(
                     isActive
                       ? "bg-gray-900 text-white"
@@ -196,40 +195,6 @@ const Navbar = ({ setOpenProfileModel }) => {
               </DisclosureButton>
             );
           })}
-          {/* {user
-            ? navigation.slice(1, 2).map((item) => (
-                <NavLink
-                  key={item.name}
-                  to={item.href}
-                  className={({ isActive }) =>
-                    isActive
-                      ? " bg-gray-900 text-white px-3 py-2 font-medium rounded-md" // Add 'active' when the link is active
-                      : " bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 font-medium rounded-md"
-                  }
-                >
-                  {item.name}
-                </NavLink>
-              ))
-            : null} */}
-          {/* {!user &&
-            navigation.slice(1, 3).map((item) => (
-              <DisclosureButton
-                key={item.name}
-                as={NavLink}
-                to={item.href}
-                className={({ isActive }) => {
-                  console.log(item.name, isActive); // Check if isActive toggles as expected
-                  return classNames(
-                    isActive
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                    "block rounded-md px-3 py-2 text-base font-medium"
-                  );
-                }}
-              >
-                {item.name}
-              </DisclosureButton>
-            ))} */}
         </div>
       </DisclosurePanel>
     </Disclosure>

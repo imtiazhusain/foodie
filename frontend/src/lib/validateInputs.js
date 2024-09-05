@@ -7,7 +7,6 @@ export function isPasswordValid(password) {
 
   // Check for any character that is not a letter or number, i.e., special characters
   const hasSpecialChar = /[^A-Za-z0-9]/.test(password);
-  console.log(hasSpecialChar);
 
   // Ensure all conditions are met
   return hasUpperCase && hasLowerCase && hasSpecialChar;
@@ -51,7 +50,6 @@ export default function validateInputs(inputs, setIsErrors) {
   }
 
   if (!inputs.profile_pic.name) {
-    console.log(inputs.profile_pic);
     newErrors.profile_pic = "Please upload profile picture";
   }
 

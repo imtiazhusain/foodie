@@ -12,7 +12,6 @@ const Layout = () => {
   const { user } = useSelector((state) => state.auth);
   const [openProfileModel, setOpenProfileModel] = useState(false);
 
-  console.log(openProfileModel);
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);

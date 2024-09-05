@@ -67,7 +67,6 @@ const Login = () => {
       localStorage.setItem("userInfo", JSON.stringify(response?.data?.data));
 
       dispatch(setUser(response?.data?.data));
-      console.log(response);
       if (response.data.data.role === "Admin") {
         navigate("/items-list");
       } else {

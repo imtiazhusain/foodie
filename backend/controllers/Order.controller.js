@@ -41,8 +41,6 @@ class OrderController {
         quantity: 1,
       });
 
-      console.log(line_items);
-
       const session = await stripe.checkout.sessions.create({
         line_items: line_items,
         mode: "payment",
@@ -95,7 +93,6 @@ class OrderController {
         .find({ user_id: req.user._id })
         .populate({ path: "user_id", select: "name profile_pic email" })
         .sort({ createdAt: -1 });
-      console.log(ordersData);
       return res.status(200).json({ status: "success", data: ordersData });
     } catch (error) {
       console.log(error);
@@ -122,7 +119,6 @@ class OrderController {
         { status: status },
         { new: true }
       );
-      console.log(UpdatedOrder);
       return res
         .status(200)
         .json({ status: "success", message: "Order status Updated" });

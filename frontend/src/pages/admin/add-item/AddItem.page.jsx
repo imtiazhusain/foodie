@@ -17,7 +17,6 @@ const AddItem = () => {
     price: "",
   });
 
-  console.log(image);
   const handleOnchange = (e) => {
     const { name, value } = e.target;
     setData((pre) => ({ ...pre, [name]: value }));
@@ -26,7 +25,6 @@ const AddItem = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(".....");
     if (!image) {
       toast.error("Please upload product image");
       setLoading(false);

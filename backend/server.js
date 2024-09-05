@@ -11,6 +11,7 @@ import foodRoutes from "./routes/food.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
 import orderRoutes from "./routes/order.routes.js";
 import path from "path";
+import { SERVER_URL } from "./config/index.js";
 app.use(express.json());
 app.use(morgan("tiny"));
 app.disable("x-powered-by");
@@ -44,5 +45,5 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(rootDirectory, "frontend", "dist", "index.html"));
 });
 const server = app.listen(PORT, () => {
-  console.log(`app is listening at http://localhost:${PORT}`);
+  console.log(`app is listening at ${SERVER_URL}`);
 });

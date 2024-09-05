@@ -49,8 +49,6 @@ const ProfileModel = ({ setOpenProfileModel }) => {
     setUserInputs((values) => ({ ...values, [name]: value }));
   };
 
-  console.log(userInputs);
-
   const EditProfile = async () => {
     setLoading(true);
     const formData = new FormData();
@@ -80,7 +78,6 @@ const ProfileModel = ({ setOpenProfileModel }) => {
         name: dataFromApi.name,
       };
 
-      console.log(tempUser);
       dispatch(setUser(tempUser));
       localStorage.setItem("userInfo", JSON.stringify(tempUser));
     } catch (error) {

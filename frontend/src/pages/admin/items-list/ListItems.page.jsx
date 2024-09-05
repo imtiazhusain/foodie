@@ -46,7 +46,6 @@ const ListItems = () => {
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
       );
-      console.log(currentItems);
 
       setCurrentPageItems(currentItems);
     }
@@ -68,8 +67,6 @@ const ListItems = () => {
       toast.error(error?.response?.data?.message || "Something went wrong");
     }
   };
-
-  console.log(currentPageItems);
 
   return (
     <div className="flex flex-col p-4">

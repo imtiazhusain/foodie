@@ -20,7 +20,6 @@ const CartTable = () => {
   const { items: cartItems, totalItems } = useSelector((state) => state.cart);
   const { data } = useSelector((state) => state.productsList);
   const dispatch = useDispatch();
-  console.log(cartItems);
 
   return (
     <>

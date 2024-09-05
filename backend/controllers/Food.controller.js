@@ -14,7 +14,6 @@ class FoodController {
       const { error } = JoiValidation.createFodItemValidation(req.body);
 
       if (error) {
-        console.log(error.message);
         return next(error);
       }
 
@@ -38,7 +37,6 @@ class FoodController {
     }
   };
   static listAllFoodItems = async (req, res, next) => {
-    console.log("inside food items.../..//.//./");
     try {
       const allFoodItems = await foodItemModel.find({});
 

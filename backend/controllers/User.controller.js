@@ -188,7 +188,6 @@ class User {
   // SEARCH USER
   static getAllUsers = (req, res, next) => {
     try {
-      console.log("ddddddddddddddddd");
       let userName = req.query.username;
 
       if (userName) {
@@ -231,18 +230,7 @@ class User {
   };
 
   static logout = async (req, res, next) => {
-    console.log(req.body);
-    // validation
-
-    // const { error } = joiValidation.refreshTokenValidation(req.body);
-    // if (error) {
-    //   return next(error);
-    // }
     try {
-      // let isdeleted = await refreshTokenModel.deleteOne({
-      //   refresh_token: req.body.refresh_token,
-      // });
-      // console.log(isdeleted);
     } catch (error) {
       return next(new Error("somthing went wrong in database"));
     }

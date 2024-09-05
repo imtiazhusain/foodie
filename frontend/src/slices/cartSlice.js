@@ -64,7 +64,6 @@ export const removeCartItemWithAPI = createAsyncThunk(
         });
       }
     } else {
-      console.log("esle bloack executed,,,,");
       // If the user is not logged in, reject the action
       return { itemId, message: "User not logged in" };
     }
@@ -100,7 +99,6 @@ export const deleteCartItemWithAPI = createAsyncThunk(
         });
       }
     } else {
-      console.log("esle bloack executed,,,,");
       // If the user is not logged in, reject the action
       return { itemId, message: "User not logged in" };
     }
@@ -114,7 +112,6 @@ export const getCartDataFromApi = createAsyncThunk(
     const { user } = state.auth; // Assuming you have a user slice with a isLoggedIn field
 
     let response = {};
-    console.log("...../......");
     if (user) {
       try {
         let resp = await axios.get("/cart/get_cart_data", {
@@ -124,8 +121,6 @@ export const getCartDataFromApi = createAsyncThunk(
           },
         });
 
-        console.log("res.....");
-        console.log(resp);
         response = resp?.data?.data || {};
       } catch (error) {
         console.log(error);
@@ -153,7 +148,6 @@ export const getCartDataFromApi = createAsyncThunk(
 function mergeCartData(existing, newData) {
   for (let key in newData) {
     if (existing.hasOwnProperty(key)) {
-      console.log("key matched//....");
       existing[key] += newData[key];
     } else {
       existing[key] = newData[key];
@@ -272,8 +266,6 @@ export const cartSlice = createSlice({
       const itemData = action.payload.itemData;
       const message = action.payload.message;
 
-      console.log("item data in rejected");
-      console.log(itemData);
       if (message) {
         // Revert the state change
         const { itemId, quantity } = itemData;
@@ -289,15 +281,10 @@ export const cartSlice = createSlice({
         state.items,
         action.payload.cartData
       );
-      console.log("....///...//");
-      console.log(totalItemCart);
-      console.log(updatedData);
       state.items = updatedData;
       state.totalItems = totalItemCart;
     });
     builder.addCase(getCartDataFromApi.rejected, (state, action) => {
-      console.log("rejected......");
-      console.log(action?.payload);
       // state.items = action.payload;
     });
   },

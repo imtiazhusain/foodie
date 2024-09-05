@@ -128,7 +128,6 @@ class CartController {
       if (!userData.cart_data) {
         userData.cart_data = new Map();
       }
-      console.log(userData.cart_data);
       const totalCartItems = userData.cart_data.size;
 
       return res.status(200).json({
