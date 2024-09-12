@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "@/pages/Layout";
 import AdminLayout from "./pages/admin/Layout";
 import { useSelector } from "react-redux";
+import VerifyUser from "./pages/verify-user/VerifyUser.page";
 
 // Lazy load the route components
 const Login = lazy(() => import("./pages/login/Login"));
@@ -52,6 +53,7 @@ function App() {
                   path="placed-orders"
                   element={user ? <PlacedOrders /> : <Navigate to="/login" />}
                 />
+                <Route path="verify-user" element={<VerifyUser />} />
                 <Route path="*" element={<PageNotFound />} />
               </Route>
             )}

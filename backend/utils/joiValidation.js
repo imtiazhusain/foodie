@@ -34,6 +34,33 @@ class JoiValidation {
     return schema.validate(body);
   }
 
+  static verifyEmailValidation(body) {
+    const schema = Joi.object({
+      userId: Joi.string().required(),
+      OTP: Joi.string()
+        .length(4)
+        .pattern(/^[0-9]+$/)
+        .required()
+        .messages({
+          "string.pattern.base": "Invalid OTP",
+          "string.empty": "OTP field cannot be empty. Please provide OTP.",
+          "string.length": "Invalid OTP.",
+          "any.required": "Please provide the OTP to proceed",
+        }),
+    });
+
+    return schema.validate(body);
+  }
+
+  static sendOTPValidation(body) {
+    const schema = Joi.object({
+      userEmail: Joi.string().email().required(),
+      userId: Joi.string().required(),
+    });
+
+    return schema.validate(body);
+  }
+
   static createFodItemValidation(body) {
     const schema = Joi.object({
       name: Joi.string().required().label("Item Name"),

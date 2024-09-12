@@ -12,9 +12,15 @@ const connectDB = async () => {
       dbName: "Foodie",
     };
 
-    await mongoose.connect(DATABASE_URL, options);
+    mongoose.connection.on("connected", () => {
+      console.log("Connected to database successfully");
+    });
 
-    console.log("Database connected...");
+    mongoose.connection.on("error", (err) => {
+      console.log("Error in connecting to database.", err);
+    });
+
+    await mongoose.connect(DATABASE_URL, options);
   } catch (err) {
     console.log(err);
   }
