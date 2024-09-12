@@ -7,6 +7,8 @@ import joiValidation from "../utils/joiValidation.js";
 import generateJwtTokens from "../utils/generateJwtTokens.js";
 import mongoose from "mongoose";
 import HelperMethods from "../utils/helper.js";
+import VerificationTokenModel from "../models/VerificationToken.model.js";
+import EmailMethods from "../utils/email.js";
 class User {
   static registerUser = async (req, res, next) => {
     try {
@@ -41,11 +43,26 @@ class User {
         password: hashedPassword,
       });
 
+      const OTP = HelperMethods.generateOTP();
+      const hashedOTP = await bcrypt.hash(OTP, 10);
+
+      const verificationToken = new VerificationTokenModel({
+        owner: registerUser._id,
+        OTP: hashedOTP,
+      });
+
+      const tokenResult = await verificationToken.save();
+
       const result = await registerUser.save();
+      EmailMethods.sendEmail(registerUser.email, "Email Verification", OTP);
 
       return res.status(201).json({
         status: "success",
         message: "User created successfully",
+        user: {
+          email: result.email,
+          _id: result._id,
+        },
       });
     } catch (error) {
       console.log(error);
@@ -229,10 +246,152 @@ class User {
     }
   };
 
+  static verifyUser = async (req, res, next) => {
+    try {
+      const userID = req.body.userId;
+      const OTP = req.body.OTP;
+      // validation
+
+      const { error } = joiValidation.verifyEmailValidation(req.body);
+
+      if (error) {
+        console.log(error.message);
+        return next(error);
+      }
+
+      const isValidID = mongoose.Types.ObjectId.isValid(userID);
+      if (!isValidID) {
+        let error = {
+          message: "Invalid user ID",
+        };
+        return next(error);
+      }
+
+      const user = await userModel.findById(userID);
+      if (!user) {
+        return next(CustomErrorHandler.notFound("User not Found"));
+      }
+
+      if (user.is_verified) {
+        return res.status(403).json({
+          status: "error",
+          message: "This account is already verified",
+        });
+      }
+
+      const token = await VerificationTokenModel.findOne({ owner: user._id });
+
+      if (!token) {
+        return next(CustomErrorHandler.notFound("No token found"));
+      }
+
+      const isMatched = await token.compareToken(OTP);
+
+      if (!isMatched) {
+        return res.status(422).json({
+          status: "error",
+          message: "Please provide a valid token!",
+        });
+      }
+      user.is_verified = true;
+
+      await VerificationTokenModel.findByIdAndDelete(token._id);
+      await user.save();
+
+      EmailMethods.sendEmail(
+        user.email,
+        "success message",
+        "Email verified successfully"
+      );
+
+      return res.status(200).json({
+        status: "success",
+        message: "Account verified",
+      });
+    } catch (error) {
+      console.log(error);
+
+      return next(error);
+    }
+  };
+
+  static sendOTP = async (req, res, next) => {
+    try {
+      const userEmail = req.body.userEmail;
+      const userId = req.body.userId;
+
+      let obj = {
+        userEmail,
+        userId,
+      };
+
+      // validation
+      const { error } = joiValidation.sendOTPValidation(obj);
+
+      if (error) {
+        console.log(error.message);
+        return next(error);
+      }
+
+      const isValidID = mongoose.Types.ObjectId.isValid(userId);
+
+      if (!isValidID) {
+        let error = {
+          message: "Invalid user ID",
+        };
+        return next(error);
+      }
+
+      const user = await userModel.findOne({ email: userEmail });
+      if (!user) {
+        return next(CustomErrorHandler.notFound("No user found"));
+      }
+
+      if (user.is_verified) {
+        return res.status(403).json({
+          status: "error",
+          message: "This Account is already verified",
+        });
+      }
+
+      const OTP = HelperMethods.generateOTP();
+
+      const exist = await VerificationTokenModel.exists({ owner: userId });
+      if (exist) {
+        const result = await VerificationTokenModel.deleteOne({
+          owner: userId,
+        });
+      }
+
+      const hashedOTP = await bcrypt.hash(OTP, 10);
+
+      const verificationToken = new VerificationTokenModel({
+        owner: userId,
+        OTP: hashedOTP,
+      });
+
+      const tokenResult = await verificationToken.save();
+      EmailMethods.sendEmail(userEmail, "Email Verification", OTP);
+
+      return res.status(200).json({
+        status: "success",
+        message: "Please verify your email",
+        user: {
+          email: userEmail,
+          user_id: userId,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+
+      return next(error);
+    }
+  };
+
   static logout = async (req, res, next) => {
     try {
     } catch (error) {
-      return next(new Error("somthing went wrong in database"));
+      return next(new Error("something went wrong in database"));
     }
     res.status(200).json({ status: "success", message: "successfully logout" });
   };

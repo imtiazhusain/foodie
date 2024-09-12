@@ -5,11 +5,14 @@ import userModel from "../models/User.model.js";
 import mongoose from "mongoose";
 import CustomErrorHandler from "../middlewares/errors/customErrorHandler.js";
 
-const stripe = new Stripe(STRIPE_SECRET_KEY);
-
 class OrderController {
   static placeOrder = async (req, res, next) => {
     try {
+      const stripe = new Stripe(STRIPE_SECRET_KEY);
+      console.log("stipe key");
+      console.log("...............................");
+      console.log(STRIPE_SECRET_KEY);
+      console.log(stripe);
       const { items, amount, address } = req.body;
       const newOrder = new orderModel({
         user_id: req.user._id,

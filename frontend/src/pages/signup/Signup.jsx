@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "../../config/axios";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -46,9 +46,9 @@ const Signup = () => {
       const response = await axios.post("/user/register_user", formData);
       // Handle the response data here
 
-      navigate("/login", {
+      navigate("/verify-user", {
         state: {
-          signupSuccess: true,
+          tempUser: response.data.user,
         },
       });
     } catch (error) {

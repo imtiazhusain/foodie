@@ -15,5 +15,7 @@ router.put(
   upload.single("profile_pic"),
   User.editUser
 );
+router.post("/verify_user", User.verifyUser);
+router.post("/send_otp", User.sendOTP);
 
 export default router;
